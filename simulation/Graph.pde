@@ -1,6 +1,7 @@
 import java.util.*;
 
-boolean debugGraph = false;
+boolean debugGraph = true;
+float stepHeight = 0.05;
 
 class Graph {
   World world;
@@ -42,17 +43,21 @@ class Graph {
       Node rightNode = null;
       Node bottomNode = null;
       for (Node rNode : nodes) {
-        if (rNode.x == node.x + 1 && rNode.y == node.y) { 
-          rightNode = rNode;
+        if (rNode.x == node.x + 1 && rNode.y == node.y) {
+          if (abs(rNode.h - node.h) < stepHeight) {
+            rightNode = rNode;
+          }
         }
-        if (rNode.x == node.x && rNode.y == node.y + 1) { 
-          bottomNode = rNode;
+        if (rNode.x == node.x && rNode.y == node.y + 1) {
+          if (abs(rNode.h - node.h) < stepHeight) {
+            bottomNode = rNode;
+          }
         }
-        if (rightNode != null && bottomNode != null) { 
+        if (rightNode != null && bottomNode != null) {
           break;
         }
       }
-      if (rightNode != null) { 
+      if (rightNode != null) {
         edges.add(new Edge(node, rightNode));
       }
       if (bottomNode != null) { 
@@ -62,15 +67,15 @@ class Graph {
   }
 
   void tick() {
+    for (Node node : nodes) {
+      //if (abs((mouseX - dragX) - node.x * tileSize) < 20 && abs((mouseY - dragY) - node.y * tileSize) < 20) { 
+      //  for (Edge edge : node.edges()) {
+      //    edge.tick();
+      //  }
+      //}
+      node.tick();
+    }
     if (debugGraph) {
-      for (Node node : nodes) {
-        if (abs((mouseX - dragX) - node.x * tileSize) < 20 && abs((mouseY - dragY) - node.y * tileSize) < 20) { 
-          for (Edge edge : node.edges()) {
-            edge.tick();
-          }
-          node.tick();
-        }
-      }
       for (Edge edge : edges) {
         edge.tick();
       }

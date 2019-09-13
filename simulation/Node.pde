@@ -3,16 +3,20 @@ class Node {
   private ArrayList<Edge> edges;
   private ArrayList<Node> neighbours;
   int x, y;
+  float h;
 
   Node(Graph tempGraph, int initX, int initY) {
     graph = tempGraph;
     x = initX;
     y = initY;
+
+    noiseSeed(graph.world.seed);
+    h = noise(x / graph.world.scale, y / graph.world.scale);
   }
 
   void tick() {
-    fill(#0000FF);
-    ellipse(x * tileSize + 3, y * tileSize + 3, 2, 2);
+    fill(h * 255);
+    rect(x * tileSize, y * tileSize, tileSize, tileSize);
   }
 
   ArrayList<Node> neighbours() {

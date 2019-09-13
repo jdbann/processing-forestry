@@ -13,7 +13,7 @@ void setup() {
   world.addPerson("Adam");
   world.addPerson("Molly");
 
-  for (int i=0; i<120; i++) {
+  for (int i=0; i<20; i++) {
     world.addTree();
   }
 }
