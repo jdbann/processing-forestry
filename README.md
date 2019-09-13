@@ -17,3 +17,10 @@ manage their work.
    path to your server as `baseUrl` in `Client.pde`.
 
 ![Simulation of some wandering lumberjacks](simulation.gif)
+
+# With thanks
+
+Many thanks to:
+
+* Red Blob Games for [_the_ A\*
+  guide](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
