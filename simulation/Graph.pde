@@ -1,6 +1,6 @@
 import java.util.*;
 
-boolean debugGraph = true;
+boolean debugGraph = false;
 float stepHeight = 0.05;
 
 class Graph {
@@ -31,18 +31,18 @@ class Graph {
           }
           clear = false;
         }
-        if (clear) { 
-          nodes.add(new Node(this, x, y));
-        }
+        nodes.add(new Node(this, x, y, clear));
       }
     }
   }
 
   void generateEdges() {
     for (Node node : nodes) {
+      if (!node.traversable) { continue; }
       Node rightNode = null;
       Node bottomNode = null;
       for (Node rNode : nodes) {
+        if (!rNode.traversable) { continue; }
         if (rNode.x == node.x + 1 && rNode.y == node.y) {
           if (abs(rNode.h - node.h) < stepHeight) {
             rightNode = rNode;

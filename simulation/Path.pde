@@ -41,7 +41,7 @@ class Path {
         break;
       }
 
-      for (Node next : current.neighbours()) {
+      for (Node next : current.traversableNeighbours()) {
         int newCost = costSoFar.get(current) + 1;
         if (costSoFar.get(next) == null || newCost < costSoFar.get(next)) {
           costSoFar.put(next, newCost);
@@ -62,6 +62,7 @@ class Path {
 
   void tick() {
     stroke(#FF00FF);
+    strokeWeight(3);
     Node nextNode = start;
     while (nextNode != null) {
       Node fromNode = cameFrom.get(nextNode);
@@ -69,8 +70,10 @@ class Path {
         line(
           fromNode.x * tileSize + tileSize / 2, 
           fromNode.y * tileSize + tileSize / 2, 
+          fromNode.h * hScale + tileSize / 2,
           nextNode.x * tileSize + tileSize / 2, 
-          nextNode.y * tileSize + tileSize / 2
+          nextNode.y * tileSize + tileSize / 2,
+          nextNode.h * hScale + tileSize / 2
           );
         nextNode = fromNode;
       } else {

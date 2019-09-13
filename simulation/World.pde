@@ -1,7 +1,3 @@
-int worldMin = 20;
-int worldMax = 30;
-int tileSize = 16;
-
 class World {
   int seed, w, h;
   float scale = 8;
@@ -22,12 +18,6 @@ class World {
 
   void tick() {
     noStroke();
-    //for (int x = 0; x < w; x++) {
-    //  for (int y = 0; y < h; y++) {
-    //    fill(noise(x / scale, y / scale) * 255);
-    //    rect(x * tileSize, y * tileSize, tileSize, tileSize);
-    //  }
-    //}
     graph.tick();
     for (WorldEntity entity : entities) {
       entity.tick();
@@ -39,8 +29,10 @@ class World {
     resetGraph();
   }
   
-  void addTree() {
-    entities.add(new Tree(this));
+  void addTrees(int count) {
+    for (int i = 0; i < count; i++) {
+      entities.add(new Tree(this));
+    }
     resetGraph();
   }
   

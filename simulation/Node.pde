@@ -1,22 +1,32 @@
+float hScale = 100;
+
 class Node {
   Graph graph;
   private ArrayList<Edge> edges;
   private ArrayList<Node> neighbours;
+  private ArrayList<Node> traversableNeighbours;
   int x, y;
   float h;
+  boolean traversable;
 
-  Node(Graph tempGraph, int initX, int initY) {
+  Node(Graph tempGraph, int initX, int initY, boolean tempTraversable) {
     graph = tempGraph;
     x = initX;
     y = initY;
+    traversable = tempTraversable;
 
     noiseSeed(graph.world.seed);
     h = noise(x / graph.world.scale, y / graph.world.scale);
   }
 
   void tick() {
-    fill(h * 255);
-    rect(x * tileSize, y * tileSize, tileSize, tileSize);
+    fill(#667761);
+    beginShape();
+    vertex(x * tileSize + 0 * tileSize / 2, y * tileSize + 0 * tileSize / 2, h * hScale);
+    vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 0 * tileSize / 2, h * hScale);
+    vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 2 * tileSize / 2, h * hScale);
+    vertex(x * tileSize + 0 * tileSize / 2, y * tileSize + 2 * tileSize / 2, h * hScale);
+    endShape();
   }
 
   ArrayList<Node> neighbours() {
@@ -32,6 +42,18 @@ class Node {
       }
     }
     return neighbours;
+  }
+  
+  ArrayList<Node> traversableNeighbours() {
+    if (traversableNeighbours == null) {
+      traversableNeighbours = new ArrayList<Node>();
+      for(Node neighbour : neighbours()) {
+        if (neighbour.traversable) {
+          traversableNeighbours.add(neighbour);
+        }
+      }
+    }
+    return traversableNeighbours;
   }
 
   ArrayList<Edge> edges() {

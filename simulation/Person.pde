@@ -1,7 +1,5 @@
-int moveSpeed = 10;
-
 class Person extends WorldEntity {
-  int tX, tY;
+  int tX, tY, moveSpeed;
   String name;
   Path path;
   PersonClient client;
@@ -13,13 +11,19 @@ class Person extends WorldEntity {
     name = initName;
     client = new PersonClient(this);
     client.register();
+    currentNode = world.graph.findNode(x, y);
     arrived();
+    moveSpeed = int(random(3, 10));
   }
 
   void tick() {
     fill(#FF0000);
     stroke(#FF0000);
-    ellipse(xW(), yW(), tileSize, tileSize);
+    pushMatrix();
+    translate(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, currentNode.h * hScale + tileSize / 2);
+    sphere(tileSize / 3);
+    popMatrix();
+    //ellipse(xW(), yW(), tileSize, tileSize);
     //line(
     //  xW() + tileSize / 2, 
     //  yW() + tileSize / 2, 
@@ -39,6 +43,7 @@ class Person extends WorldEntity {
     if (next != null) {
       x = next.x;
       y = next.y;
+      currentNode = next;
     } else {
       arrived();
     }

@@ -1,6 +1,7 @@
 class WorldEntity {
   World world;
   int x, y;
+  Node currentNode;
   
   WorldEntity(World initWorld) {
     world = initWorld;
