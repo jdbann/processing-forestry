@@ -1,3 +1,5 @@
+class UnreachableException extends Exception {}
+
 class Path {
   Graph graph;
   int sX, sY, dX, dY;
@@ -5,7 +7,7 @@ class Path {
   ArrayList<NodePriority> frontier;
   HashMap<Node, Node> cameFrom;
 
-  Path(Graph graphTemp, int sXTemp, int sYTemp, int dXTemp, int dYTemp) {
+  Path(Graph graphTemp, int sXTemp, int sYTemp, int dXTemp, int dYTemp) throws UnreachableException {
     graph = graphTemp;
     sX = sXTemp;
     sY = sYTemp;
@@ -14,12 +16,11 @@ class Path {
     findPath();
   }
 
-  void findPath() {
+  void findPath() throws UnreachableException {
     frontier = new ArrayList<NodePriority>();
     end = graph.findNode(sX, sY);
     if (end == null) {
-      println("DESTINATION CAN'T BE REACHED");
-      return;
+      throw new UnreachableException();
     }
     frontier.add(new NodePriority(end, 0));
 
