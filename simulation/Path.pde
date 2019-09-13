@@ -15,7 +15,6 @@ class Path {
   }
 
   void findPath() {
-    println("Finding path");
     frontier = new ArrayList<NodePriority>();
     end = graph.findNode(sX, sY);
     if (end == null) {
