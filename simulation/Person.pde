@@ -13,7 +13,7 @@ class Person extends WorldEntity {
     client.register();
     currentNode = world.graph.findNode(x, y);
     arrived();
-    moveSpeed = int(random(3, 10));
+    moveSpeed = int(random(2, 5));
   }
 
   void tick() {
@@ -23,13 +23,6 @@ class Person extends WorldEntity {
     translate(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, currentNode.h * hScale + tileSize / 2);
     sphere(tileSize / 3);
     popMatrix();
-    //ellipse(xW(), yW(), tileSize, tileSize);
-    //line(
-    //  xW() + tileSize / 2, 
-    //  yW() + tileSize / 2, 
-    //  tX * tileSize + tileSize / 2, 
-    //  tY * tileSize + tileSize / 2
-    //  );
     if (frameCount % moveSpeed == 0) {
       walk();
     }
