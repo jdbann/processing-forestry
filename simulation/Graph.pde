@@ -1,0 +1,101 @@
+import java.util.*;
+
+class Graph {
+  World world;
+  ArrayList<Node> nodes;
+  ArrayList<Edge> edges;
+  ArrayList<Path> paths;
+
+  Graph(World initWorld) {
+    world = initWorld;
+    nodes = new ArrayList<Node>();
+    edges = new ArrayList<Edge>();
+    paths = new ArrayList<Path>();
+    generateNodes();
+    generateEdges();
+  }
+
+  void generateNodes() {
+    for (int x = 0; x < world.w; x++) {
+      for (int y = 0; y < world.h; y++) {
+        boolean clear = true;
+        for (WorldEntity entity : world.entities) {
+          if (entity instanceof Person) { 
+            continue;
+          }
+          if (entity.x != x || entity.y != y) { 
+            continue;
+          }
+          clear = false;
+        }
+        if (clear) { 
+          nodes.add(new Node(this, x, y));
+        }
+      }
+    }
+  }
+
+  void generateEdges() {
+    for (Node node : nodes) {
+      Node rightNode = null;
+      Node bottomNode = null;
+      for (Node rNode : nodes) {
+        if (rNode.x == node.x + 1 && rNode.y == node.y) { 
+          rightNode = rNode;
+        }
+        if (rNode.x == node.x && rNode.y == node.y + 1) { 
+          bottomNode = rNode;
+        }
+        if (rightNode != null && bottomNode != null) { 
+          break;
+        }
+      }
+      if (rightNode != null) { 
+        edges.add(new Edge(node, rightNode));
+      }
+      if (bottomNode != null) { 
+        edges.add(new Edge(node, bottomNode));
+      }
+    }
+  }
+
+  void tick() {
+    for (Node node : nodes) {
+      if (abs((mouseX - dragX) - node.x * tileSize) < 20 && abs((mouseY - dragY) - node.y * tileSize) < 20) { 
+        for (Edge edge : node.edges()) {
+          edge.tick();
+        }
+        //node.tick();
+      }
+    }
+    //for (Edge edge : edges) {
+    //  edge.tick();
+    //}
+    for (Path path : paths) {
+      path.tick();
+    }
+  }
+
+  Node findNode(int x, int y) {
+    for (Node node : nodes) {
+      if (node.x == x && node.y == y) { 
+        return node;
+      }
+    }
+    return null;
+  }
+}
+
+class NodePriority implements Comparable<NodePriority> {
+  Node node;
+  int priority;
+
+  NodePriority(Node nodeTemp, int priorityTemp) {
+    node = nodeTemp;
+    priority = priorityTemp;
+  }
+
+  public int compareTo(NodePriority n0) {
+    return priority - n0.priority;
+  }
+}
