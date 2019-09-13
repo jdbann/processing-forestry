@@ -1,5 +1,7 @@
 import java.util.*;
 
+boolean debugGraph = false;
+
 class Graph {
   World world;
   ArrayList<Node> nodes;
@@ -60,19 +62,18 @@ class Graph {
   }
 
   void tick() {
-    for (Node node : nodes) {
-      if (abs((mouseX - dragX) - node.x * tileSize) < 20 && abs((mouseY - dragY) - node.y * tileSize) < 20) { 
-        for (Edge edge : node.edges()) {
-          edge.tick();
+    if (debugGraph) {
+      for (Node node : nodes) {
+        if (abs((mouseX - dragX) - node.x * tileSize) < 20 && abs((mouseY - dragY) - node.y * tileSize) < 20) { 
+          for (Edge edge : node.edges()) {
+            edge.tick();
+          }
+          node.tick();
         }
-        //node.tick();
       }
-    }
-    //for (Edge edge : edges) {
-    //  edge.tick();
-    //}
-    for (Path path : paths) {
-      path.tick();
+      for (Edge edge : edges) {
+        edge.tick();
+      }
     }
   }
 
