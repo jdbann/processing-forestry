@@ -37,4 +37,18 @@ class PersonClient extends Client {
 
     return parseJSONObject(post.getContent());
   }
+  
+  ArrayList<Task> getTasks() {
+    GetRequest get = get("/tasks");
+    get.send();
+    ArrayList<Task> tasks = new ArrayList<Task>();
+    JSONObject jsonResponse = parseJSONObject(get.getContent());
+    JSONArray jsonTasks = jsonResponse.getJSONArray("tasks");
+    
+    for (int i = 0; i < jsonTasks.size(); i++) {
+      JSONObject jsonTask = jsonTasks.getJSONObject(i);
+      tasks.add(new WalkTask(jsonTask.getInt("x"), jsonTask.getInt("y")));
+    }
+    return tasks;
+  }
 }

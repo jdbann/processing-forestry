@@ -55,9 +55,10 @@ class Person extends WorldEntity {
   }
 
   void arrived() {
-    JSONObject newDestination = client.getNewDestination();
-    tX = newDestination.getInt("x");
-    tY = newDestination.getInt("y");
+    ArrayList<Task> tasks = client.getTasks();
+    Task newTask = tasks.get(0);
+    tX = newTask.destinationX;
+    tY = newTask.destinationY;
     try {
       path = new Path(world.graph, tX, tY, x, y);
     } catch (UnreachableException e) {
