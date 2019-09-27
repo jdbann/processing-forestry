@@ -60,16 +60,19 @@ class Person extends WorldEntity {
     client.confirmTask(nextTask);
     return nextTask;
   }
-
-  void arrived() {
-    Task newTask = getNextTask();
-    tX = newTask.destinationX;
-    tY = newTask.destinationY;
+  
+  boolean setDestination(int destinationX, int destinationY) {
+    tX = destinationX;
+    tY = destinationY;
     try {
       path = new Path(world.graph, tX, tY, x, y);
+      return true;
     } catch (UnreachableException e) {
-      println("Couldn't reach that location. Getting a new one.");
-      arrived();
+      return false;
     }
+  }
+
+  void arrived() {
+    getNextTask();
   }
 }

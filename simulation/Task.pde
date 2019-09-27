@@ -1,14 +1,29 @@
 class Task {
+  Person person;
   String id;
   int destinationX, destinationY;
-  Task() {
+  ArrayList<Step> steps;
+  Task(Person tempPerson) {
+    person = tempPerson;
+    steps = new ArrayList<Step>();
+  }
+  
+  boolean doNextStep() {
+    return true;
   }
 }
 
 class WalkTask extends Task {
-  WalkTask(String tempId, int tempDestinationX, int tempDestinationY) {
+  WalkTask(Person person, String tempId, int tempDestinationX, int tempDestinationY) {
+    super(person);
     id = tempId;
-    destinationX = tempDestinationX;
-    destinationY = tempDestinationY;
+    steps.add(new WalkStep(person, tempDestinationX, tempDestinationY));
+    doNextStep();
+  }
+  
+  boolean doNextStep() {
+    Step nextStep = steps.get(0);
+    steps.remove(nextStep);
+    return nextStep.beginStep();
   }
 }
