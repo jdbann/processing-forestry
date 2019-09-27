@@ -92,7 +92,7 @@ class World
   def self.reset_sweeper
     @@sweeper = @@w.times.map do |x|
       locations = @@h.times.map do |y|
-        { x: x, y: y }
+        { id: "#{x}_#{y}", x: x, y: y }
       end
       x.even? ? locations : locations.reverse
     end.flatten
@@ -100,6 +100,16 @@ class World
 
   def self.sweep
     @@sweeper.pop || reset_sweeper && sweep
+  end
+
+  def self.sweep_locations
+    @@sweeper
+  end
+
+  def self.remove_sweep_location(id)
+    @@sweeper = @@sweeper.reject do |location|
+      location[:id] == id
+    end
   end
 end
 
@@ -131,16 +141,17 @@ post "/people" do
   person.attributes.to_json
 end
 
-get "/people/:id" do
-  Person.list.detect { |person| person.name == params[:id] }.attributes.to_json
+get "/people/:person_id" do
+  Person.list.detect do |person|
+    person.name == params[:person_id]
+  end.attributes.to_json
 end
 
-post "/people/:id/tasks" do
+post "/people/:person_id/tasks" do
+  World.remove_sweep_location(params[:id])
   201
 end
 
 get "/tasks" do
-  { tasks: [
-    World.sweep.merge(type: "walk", id: "anything"),
-  ] }.to_json
+  { tasks: World.sweep_locations.take(3) }.to_json
 end
