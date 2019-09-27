@@ -25,11 +25,10 @@ class World {
       entity.tick();
     }
     if (toRemove.size() > 0) {
-      for (int i = toRemove.size() - 1; i > 0; i--) {
-        WorldEntity entityToRemove = toRemove.get(i);
+      for (WorldEntity entityToRemove : toRemove) {
         entities.remove(entityToRemove);
-        toRemove.remove(entityToRemove);
       }
+      toRemove.clear();
       resetGraph();
     }
   }
