@@ -37,6 +37,13 @@ class Tree
 
   def self.add(tree)
     @@trees << tree
+    task = {
+      x: tree.x,
+      y: tree.y,
+      id: "tree_#{tree.x}_#{tree.y}",
+      type: "chopTree",
+    }
+    TaskList.add(task)
   end
 
   def self.clear
@@ -89,26 +96,43 @@ class World
     @@h
   end
 
-  def self.reset_sweeper
-    @@sweeper = @@w.times.map do |x|
-      locations = @@h.times.map do |y|
-        { id: "#{x}_#{y}", x: x, y: y }
+  def self.set_size(width, height)
+    @@w = width.to_i
+    @@h = height.to_i
+    sweep_for_trees
+  end
+
+  def self.sweep_for_trees
+    @@w.times do |x|
+      @@h.times do |y|
+        new_y = x.even? ? y : @@h - y
+        task = { type: "walk", id: "#{x}_#{new_y}", x: x, y: new_y }
+        TaskList.add(task)
       end
-      x.even? ? locations : locations.reverse
-    end.flatten
+    end
+  end
+end
+
+class TaskList
+  @@tasks = []
+
+  def self.add(new_task)
+    return if @@tasks.any? { |task| task[:id] == new_task[:id] }
+
+    @@tasks << new_task
   end
 
-  def self.sweep
-    @@sweeper.pop || reset_sweeper && sweep
+  def self.tasks
+    @@tasks
   end
 
-  def self.sweep_locations
-    @@sweeper
+  def self.clear
+    @@tasks = []
   end
 
-  def self.remove_sweep_location(id)
-    @@sweeper = @@sweeper.reject do |location|
-      location[:id] == id
+  def self.remove(id)
+    @@tasks = @@tasks.reject do |task|
+      task[:id] == id
     end
   end
 end
@@ -116,8 +140,8 @@ end
 post "/world" do
   Tree.clear
   Person.clear
-  World.width = params[:w].to_i
-  World.height = params[:h].to_i
+  TaskList.clear
+  World.set_size(params[:w], params[:h])
   { w: World.width, h: World.height }.to_json
 end
 
@@ -148,10 +172,10 @@ get "/people/:person_id" do
 end
 
 post "/people/:person_id/tasks" do
-  World.remove_sweep_location(params[:id])
+  TaskList.remove(params[:id])
   201
 end
 
 get "/tasks" do
-  { tasks: World.sweep_locations.take(3) }.to_json
+  { tasks: TaskList.tasks.take(60) }.to_json
 end

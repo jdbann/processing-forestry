@@ -3,6 +3,7 @@ class Person extends WorldEntity {
   String name;
   Path path;
   PersonClient client;
+  Task task;
 
   Person(World initWorld, String initName) {
     super(initWorld);
@@ -12,7 +13,7 @@ class Person extends WorldEntity {
     client = new PersonClient(this);
     client.register();
     currentNode = world.graph.findNode(x, y);
-    arrived();
+    getNextTask();
     moveSpeed = int(random(2, 5));
   }
 
@@ -24,7 +25,13 @@ class Person extends WorldEntity {
     sphere(tileSize / 3);
     popMatrix();
     if (frameCount % moveSpeed == 0) {
-      walk();
+      if (task != null) {
+        if (task.isComplete()) {
+          getNextTask();
+        } else {
+          task.tick();
+        }
+      }
     }
     if (path != null) {
       path.tick();
@@ -51,29 +58,40 @@ class Person extends WorldEntity {
       WorldEntity occupant = world.graph.findNode(cX, cY).occupant;
       if (occupant instanceof Tree) {
         client.reportTree(cX, cY);
+        //Tree tree = (Tree)occupant;
+        //tree.chop();
       }
     }
   }
   
-  Task getNextTask() {
+  void getNextTask() {
     ArrayList<Task> tasks = client.getTasks();
-    Task nextTask = tasks.get(0);
-    client.confirmTask(nextTask);
-    return nextTask;
+    while (tasks.size() > 0) {
+      Task nextTask = tasks.get(0);
+      tasks.remove(nextTask);
+      if (nextTask.isPossible()) {
+        client.confirmTask(nextTask);
+        task = nextTask;
+        task.begin();
+        return;
+      }
+    }
+    task = null;
   }
   
-  boolean setDestination(int destinationX, int destinationY) {
-    tX = destinationX;
-    tY = destinationY;
+  Path getPathTo(int destinationX, int destinationY) {
     try {
-      path = new Path(world.graph, tX, tY, x, y);
-      return true;
+      return new Path(world.graph, destinationX, destinationY, x, y);
     } catch (UnreachableException e) {
-      return false;
+      return null;
     }
+  }
+  
+  void setDestination(int destinationX, int destinationY) {
+    path = getPathTo(destinationX, destinationY);
   }
 
   void arrived() {
-    getNextTask();
+    //getNextTask();
   }
 }

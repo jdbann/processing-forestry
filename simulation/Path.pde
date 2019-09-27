@@ -19,7 +19,7 @@ class Path {
   void findPath() throws UnreachableException {
     frontier = new ArrayList<NodePriority>();
     end = graph.findNode(sX, sY);
-    if (end == null) {
+    if (end == null || end.occupant != null) {
       throw new UnreachableException();
     }
     frontier.add(new NodePriority(end, 0));
@@ -38,7 +38,7 @@ class Path {
 
       if (current.x == dX && current.y == dY) {
         start = current;
-        break;
+        return;
       }
 
       for (Node next : current.traversableNeighbours()) {
@@ -53,6 +53,8 @@ class Path {
 
       Collections.sort(frontier);
     }
+
+    throw new UnreachableException();
   }
   
   Node nextStep() {

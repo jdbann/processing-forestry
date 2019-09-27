@@ -5,9 +5,13 @@ class Step {
     person = tempPerson;
   }
   
-  boolean beginStep() {
-    return false;
+  void tick() {};
+  
+  boolean isComplete() {
+    return true;
   }
+  
+  void begin() {}
 }
 
 class WalkStep extends Step {
@@ -18,7 +22,15 @@ class WalkStep extends Step {
     y = tempY;
   }
   
-  boolean beginStep() {
-    return person.setDestination(x, y);
+  void tick() {
+    person.walk();
+  }
+  
+  boolean isComplete() {
+    return person.x == x && person.y == y;
+  }
+  
+  void begin() {
+    person.setDestination(x, y);
   }
 }
