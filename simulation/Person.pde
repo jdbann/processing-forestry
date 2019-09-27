@@ -53,10 +53,16 @@ class Person extends WorldEntity {
       }
     }
   }
+  
+  Task getNextTask() {
+    ArrayList<Task> tasks = client.getTasks();
+    Task nextTask = tasks.get(0);
+    client.confirmTask(nextTask);
+    return nextTask;
+  }
 
   void arrived() {
-    ArrayList<Task> tasks = client.getTasks();
-    Task newTask = tasks.get(0);
+    Task newTask = getNextTask();
     tX = newTask.destinationX;
     tY = newTask.destinationY;
     try {

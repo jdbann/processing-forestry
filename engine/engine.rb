@@ -135,8 +135,12 @@ get "/people/:id" do
   Person.list.detect { |person| person.name == params[:id] }.attributes.to_json
 end
 
+post "/people/:id/tasks" do
+  201
+end
+
 get "/tasks" do
   { tasks: [
-    World.sweep.merge(type: "walk"),
+    World.sweep.merge(type: "walk", id: "anything"),
   ] }.to_json
 end
