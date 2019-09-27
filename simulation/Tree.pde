@@ -38,7 +38,7 @@ class Tree extends WorldEntity {
   
   void chop() {
     health --;
-    if (health == 0) {
+    if (health <= 0) {
       world.toRemove.add(this);
       currentNode.occupant = null;
     }
