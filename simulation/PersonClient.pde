@@ -23,6 +23,13 @@ class PersonClient extends Client {
     post.addData("y", str(person.y));
     post.send();
   }
+  
+  void reportTree(int x, int y) {
+    PostRequest post = super.post("/trees");
+    post.addData("x", str(x));
+    post.addData("y", str(y));
+    post.send();
+  }
 
   JSONObject getNewDestination() {
     PostRequest post = post("/target");

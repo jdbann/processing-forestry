@@ -21,7 +21,7 @@ class Graph {
   void generateNodes() {
     for (int x = 0; x < world.w; x++) {
       for (int y = 0; y < world.h; y++) {
-        boolean clear = true;
+        WorldEntity occupant = null;
         for (WorldEntity entity : world.entities) {
           if (entity instanceof Person) { 
             continue;
@@ -29,9 +29,9 @@ class Graph {
           if (entity.x != x || entity.y != y) { 
             continue;
           }
-          clear = false;
+          occupant = entity;
         }
-        nodes.add(new Node(this, x, y, clear));
+        nodes.add(new Node(this, x, y, occupant));
       }
     }
   }

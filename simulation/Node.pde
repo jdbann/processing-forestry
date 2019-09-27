@@ -8,12 +8,14 @@ class Node {
   int x, y;
   float h;
   boolean traversable;
+  WorldEntity occupant;
 
-  Node(Graph tempGraph, int initX, int initY, boolean tempTraversable) {
+  Node(Graph tempGraph, int initX, int initY, WorldEntity tempOccupant) {
     graph = tempGraph;
     x = initX;
     y = initY;
-    traversable = tempTraversable;
+    occupant = tempOccupant;
+    traversable = !(occupant instanceof Tree);
 
     noiseSeed(graph.world.seed);
     h = noise(x / graph.world.scale, y / graph.world.scale);

@@ -1,6 +1,7 @@
-int worldMin = 30;
-int worldMax = 60;
+int worldMin = 20;
+int worldMax = 30;
 int tileSize = 16;
+int treeCount = 80;
 
 int dragX, dragY;
 World world;
@@ -13,11 +14,11 @@ void setup() {
   dragX = (width - world.width()) / 2;
   dragY = (height - world.height()) / 2;
 
+  world.addTrees(treeCount);
+
   world.addPerson("John");
   world.addPerson("Adam");
   world.addPerson("Molly");
-
-  world.addTrees(180);
 }
 
 void draw() {
