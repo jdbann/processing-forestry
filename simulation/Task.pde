@@ -8,33 +8,32 @@ class Task {
     id = tempId;
     steps = new ArrayList<Step>();
   }
-  
+
   void begin() {
     Step nextStep = steps.get(0);
     nextStep.begin();
   }
-  
+
   void tick() {
     for (Step step : steps) {
       if (step.isComplete()) {
-        break;
+        continue;
       }
-      
+
       step.tick();
       return;
     }
   }
-  
+
   boolean isComplete() {
     for (Step step : steps) {
       if (!step.isComplete()) {
         return false;
       }
     }
-      
     return true;
   }
-  
+
   boolean isPossible() {
     return false;
   }
@@ -47,9 +46,8 @@ class WalkTask extends Task {
     x = tempX;
     y = tempY;
     steps.add(new WalkStep(person, tempX, tempY));
-    begin();
   }
-  
+
   boolean isPossible() {
     Path path = person.getPathTo(x, y);
     if (path != null) {
@@ -61,7 +59,43 @@ class WalkTask extends Task {
 }
 
 class ChopTreeTask extends Task {
+  int treeX, treeY;
+
   ChopTreeTask(Person person, String id, int tempTreeX, int tempTreeY) {
     super(person, id);
+    treeX = tempTreeX;
+    treeY = tempTreeY;
+    Path path = findPathToTree();
+    if (path != null) {
+      Node destination = path.end;
+      steps.add(new WalkStep(person, destination.x, destination.y));
+      steps.add(new ChopTreeStep(person, treeX, treeY));
+    }
+  }
+
+  Path findPathToTree() {
+    Path path = person.getPathTo(treeX + 1, treeY);
+    if (path != null) { 
+      return path;
+    }
+    path = person.getPathTo(treeX - 1, treeY);
+    if (path != null) { 
+      return path;
+    }
+    path = person.getPathTo(treeX, treeY + 1);
+    if (path != null) { 
+      return path;
+    }
+    path = person.getPathTo(treeX, treeY - 1);
+    return path;
+  }
+
+  boolean isPossible() {
+    Path path = findPathToTree();
+    if (path != null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -47,7 +47,14 @@ class PersonClient extends Client {
     
     for (int i = 0; i < jsonTasks.size(); i++) {
       JSONObject jsonTask = jsonTasks.getJSONObject(i);
-      tasks.add(new WalkTask(person, jsonTask.getString("id"), jsonTask.getInt("x"), jsonTask.getInt("y")));
+      switch(jsonTask.getString("type")) {
+        case "walk":
+          tasks.add(new WalkTask(person, jsonTask.getString("id"), jsonTask.getInt("x"), jsonTask.getInt("y")));
+          break;
+        case "chopTree":
+          tasks.add(new ChopTreeTask(person, jsonTask.getString("id"), jsonTask.getInt("x"), jsonTask.getInt("y")));
+          break;
+      }
     }
     return tasks;
   }

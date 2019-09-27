@@ -123,7 +123,7 @@ class TaskList
   end
 
   def self.tasks
-    @@tasks
+    @@tasks.sort_by { |task| task[:type] }
   end
 
   def self.clear
