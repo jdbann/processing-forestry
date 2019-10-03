@@ -3,7 +3,6 @@ class Tree extends WorldEntity {
   float heading;
   Tree(World initWorld) {
     super(initWorld);
-    currentNode = null;
     health = 3 + int(random(3));
     maxHealth = health;
     heading = random(2.0 * PI);
@@ -14,7 +13,7 @@ class Tree extends WorldEntity {
     stroke(#B5BA72);
     noFill();
     pushMatrix();
-    translate(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, currentNode().h * hScale);
+    translate(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, currentNode.h * hScale);
     rotateZ(heading);
     rotateX(damage * PI / 2.0);
     pushMatrix();
@@ -27,13 +26,6 @@ class Tree extends WorldEntity {
     box(2, 2, tileSize);
     popMatrix();
     popMatrix();
-  }
-  
-  Node currentNode() {
-    if (currentNode == null) {
-      currentNode = world.graph.findNode(x, y);
-    }
-    return currentNode;
   }
   
   void chop() {

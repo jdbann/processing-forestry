@@ -8,9 +8,10 @@ class WorldEntity {
     while (true) {
       x = int(random(world.w));
       y = int(random(world.h));
-      currentNode = world.graph.findNode(x, y);
-      if (currentNode.occupant == null) {
-        currentNode.occupant = this;
+      Node node = world.graph.findNode(x, y);
+      if (node.occupant == null) {
+        node.occupant = this;
+        currentNode = node;
         break;
       }
     }
