@@ -96,7 +96,7 @@ class Node {
     if (traversableNeighbours == null) {
       traversableNeighbours = new ArrayList<Node>();
       for(Node neighbour : neighbours()) {
-        if (neighbour.traversable) {
+        if (neighbour.traversable && abs(h - neighbour.h) < stepHeight) {
           traversableNeighbours.add(neighbour);
         }
       }
