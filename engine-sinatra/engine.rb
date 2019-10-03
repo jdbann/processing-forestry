@@ -72,6 +72,41 @@ class Tree
   end
 end
 
+class Log
+  @@logs = []
+
+  attr_accessor :x, :y
+
+  def self.add(log)
+    @@logs << log
+  end
+
+  def self.clear
+    @@logs = []
+  end
+
+  def self.to_s
+    World.width.times.map do |x|
+      World.height.times.map do |y|
+        if @@logs.detect { |t| t.x == x && t.y == y }
+          "L"
+        else
+          " "
+        end
+      end.join("")
+    end.join("\n")
+  end
+
+  def initialize(x_position, y_position)
+    self.x = x_position
+    self.y = y_position
+  end
+
+  def attributes
+    { x: x, y: y }
+  end
+end
+
 class World
   @@w = 1
   @@h = 1
@@ -139,6 +174,7 @@ end
 
 post "/world" do
   Tree.clear
+  Log.clear
   Person.clear
   TaskList.clear
   World.set_size(params[:w], params[:h])
@@ -157,6 +193,16 @@ end
 
 get "/trees" do
   Tree.to_s
+end
+
+post "/logs" do
+  log = Log.new(params[:x].to_i, params[:y].to_i)
+  Log.add(log)
+  log.attributes.to_json
+end
+
+get "/logs" do
+  Log.to_s
 end
 
 post "/people" do

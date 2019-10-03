@@ -30,6 +30,13 @@ class PersonClient extends Client {
     post.addData("y", str(y));
     post.send();
   }
+  
+  void reportLog(int x, int y) {
+    PostRequest post = super.post("/logs");
+    post.addData("x", str(x));
+    post.addData("y", str(y));
+    post.send();
+  }
 
   JSONObject getNewDestination() {
     PostRequest post = post("/target");

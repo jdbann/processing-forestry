@@ -56,17 +56,20 @@ class Person extends WorldEntity {
     } else {
       arrived();
     }
-    reportIfTreeAt(x - 1, y);
-    reportIfTreeAt(x + 1, y);
-    reportIfTreeAt(x, y - 1);
-    reportIfTreeAt(x, y + 1);
+    reportIfAnythingAt(x - 1, y);
+    reportIfAnythingAt(x + 1, y);
+    reportIfAnythingAt(x, y - 1);
+    reportIfAnythingAt(x, y + 1);
   }
 
-  void reportIfTreeAt(int cX, int cY) {
+  void reportIfAnythingAt(int cX, int cY) {
     if (cX >= 0 && cX < world.w && cY >= 0&& cY < world.h) {
       WorldEntity occupant = world.graph.findNode(cX, cY).occupant;
       if (occupant instanceof Tree) {
         client.reportTree(cX, cY);
+      }
+      if (occupant instanceof Log) {
+        client.reportLog(cX, cY);
       }
     }
   }
