@@ -3,6 +3,7 @@ class World {
   float scale = 8;
   ArrayList<WorldEntity> entities;
   ArrayList<WorldEntity> toRemove;
+  ArrayList<WorldEntity> toAdd;
   WorldClient client;
   Graph graph;
 
@@ -13,6 +14,7 @@ class World {
     h = int(random(worldMin, worldMax));
     entities = new ArrayList<WorldEntity>();
     toRemove = new ArrayList<WorldEntity>();
+    toAdd = new ArrayList<WorldEntity>();
     client = new WorldClient(this);
     client.register();
     graph = new Graph(this);
@@ -26,11 +28,15 @@ class World {
     for (WorldEntity entity : entities) {
       entity.tick();
     }
-    if (toRemove.size() > 0) {
+    if (toRemove.size() > 0 || toAdd.size() > 0) {
       for (WorldEntity entityToRemove : toRemove) {
         entities.remove(entityToRemove);
       }
       toRemove.clear();
+      for (WorldEntity entityToAdd : toAdd) {
+        entities.add(entityToAdd);
+      }
+      toAdd.clear();
       resetGraph();
     }
     popMatrix();

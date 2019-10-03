@@ -5,7 +5,7 @@ class Tree extends WorldEntity {
 
   Tree(World initWorld) {
     super(initWorld);
-    health = 3 + int(random(3));
+    health = 3 + int(random(9));
     maxHealth = health;
     heading = random(2.0 * PI);
     traversable = false;
@@ -37,7 +37,15 @@ class Tree extends WorldEntity {
     health --;
     if (health <= 0) {
       world.toRemove.add(this);
-      currentNode.setOccupant(null);
+      replaceWithLogs();
     }
+  }
+
+  void replaceWithLogs() {
+    Log logs = new Log(world);
+    logs.logCount = maxHealth;
+    world.toAdd.add(logs);
+    currentNode.setOccupant(logs);
+    logs.setCurrentNode(currentNode);
   }
 }
