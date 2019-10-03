@@ -11,10 +11,16 @@ class WorldEntity {
       Node node = world.graph.findNode(x, y);
       if (node.occupant == null) {
         node.occupant = this;
-        currentNode = node;
+        setCurrentNode(node);
         break;
       }
     }
+  }
+  
+  void setCurrentNode(Node node) {
+    currentNode = node;
+    x = node.x;
+    y = node.y;
   }
   
   void tick() {

@@ -12,7 +12,6 @@ class Person extends WorldEntity {
     name = initName;
     client = new PersonClient(this);
     client.register();
-    currentNode = world.graph.findNode(x, y);
     getNextTask();
     moveSpeed = int(random(2, 5));
   }
@@ -43,7 +42,7 @@ class Person extends WorldEntity {
     if (next != null) {
       x = next.x;
       y = next.y;
-      currentNode = next;
+      setCurrentNode(next);
     } else {
       arrived();
     }
