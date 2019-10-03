@@ -3,7 +3,7 @@ int worldMax = 30;
 int tileSize = 16;
 int treeCount = 80;
 
-int dragX, dragY;
+int zRotation, xRotation, zoom;
 World world;
 
 void setup() {
@@ -11,8 +11,9 @@ void setup() {
   frameRate(60);
 
   world = new World(int(random(256*256)));
-  dragX = (width - world.width()) / 2;
-  dragY = (height - world.height()) / 2;
+  zRotation = 0;
+  xRotation = 0;
+  zoom = 200;
 
   world.addTrees(treeCount);
 
@@ -28,19 +29,26 @@ void draw() {
   popMatrix();
   ambientLight(72, 72, 72);
   background(0);
-  camera(width / 2, 300 + height / 2, 400, width / 2, height / 2, 0, 
+  camera(width / 2, 300 + height / 2, 200, width / 2, height / 2, 0, 
        0.0, 1.0, 0.0);
-  translate(dragX, dragY);
+  translate(width / 2, height / 2);
   ellipseMode(CORNER);
+  rotateX(xRotation / 180.0);
+  rotateZ(zRotation / 180.0);
+  scale(zoom / 200.0);
 
   world.tick();
 }
 
 void mouseDragged() {
-  dragX += mouseX - pmouseX;
-  dragY += mouseY - pmouseY;
+  zRotation -= mouseX - pmouseX;
+  xRotation -= mouseY - pmouseY;
 }
 
 void keyPressed() {
   debugGraph = !debugGraph;
+}
+
+void mouseWheel(MouseEvent event) {
+  zoom -= event.getCount();
 }

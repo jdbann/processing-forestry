@@ -20,6 +20,8 @@ class World {
 
   void tick() {
     noStroke();
+    pushMatrix();
+    translate(-world.width() / 2, -world.height() / 2);
     graph.tick();
     for (WorldEntity entity : entities) {
       entity.tick();
@@ -31,6 +33,7 @@ class World {
       toRemove.clear();
       resetGraph();
     }
+    popMatrix();
   }
 
   void addPerson(String name) {
