@@ -55,8 +55,6 @@ class Person extends WorldEntity {
       WorldEntity occupant = world.graph.findNode(cX, cY).occupant;
       if (occupant instanceof Tree) {
         client.reportTree(cX, cY);
-        //Tree tree = (Tree)occupant;
-        //tree.chop();
       }
     }
   }
