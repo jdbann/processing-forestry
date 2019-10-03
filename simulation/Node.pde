@@ -24,9 +24,50 @@ class Node {
     occupant = newOccupant;
     traversable = occupant != null ? occupant.traversable : true;
   }
+  
+  PShape nodeShape() {
+    PShape nodeShape = createShape();
+    nodeShape.setFill(color(#667761));
+    nodeShape.setStroke(false);
+    nodeShape.beginShape();
+    nodeShape.vertex(x * tileSize + 0 * tileSize / 2, y * tileSize + 0 * tileSize / 2, h * hScale);
+    nodeShape.vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 0 * tileSize / 2, h * hScale);
+    nodeShape.vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 2 * tileSize / 2, h * hScale);
+    nodeShape.vertex(x * tileSize + 0 * tileSize / 2, y * tileSize + 2 * tileSize / 2, h * hScale);
+    nodeShape.endShape();
+    return nodeShape;
+  }
+  
+  ArrayList<PShape> neighbourSides() {
+    ArrayList<PShape> sides = new ArrayList<PShape>();
+    for (Node neighbour : neighbours()) {
+      PShape sideShape = createShape();
+      if (abs(h - neighbour.h) < stepHeight) {
+        sideShape.setFill(color(#667761));
+      } else {
+        sideShape.setFill(color(192));
+      }
+      sideShape.setStroke(false);
+      sideShape.beginShape();
+      if (x < neighbour.x) {
+        sideShape.vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 2 * tileSize / 2, h * hScale);
+        sideShape.vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 2 * tileSize / 2, neighbour.h * hScale);
+        sideShape.vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 0 * tileSize / 2, neighbour.h * hScale);
+        sideShape.vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 0 * tileSize / 2, h * hScale);
+      }
+      if (y < neighbour.y) {
+        sideShape.vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 2 * tileSize / 2, h * hScale);
+        sideShape.vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 2 * tileSize / 2, neighbour.h * hScale);
+        sideShape.vertex(x * tileSize + 0 * tileSize / 2, y * tileSize + 2 * tileSize / 2, neighbour.h * hScale);
+        sideShape.vertex(x * tileSize + 0 * tileSize / 2, y * tileSize + 2 * tileSize / 2, h * hScale);
+      }
+      sideShape.endShape();
+      sides.add(sideShape);
+    }
+    return sides;
+  }
 
   void tick() {
-    fill(#667761);
     beginShape();
     vertex(x * tileSize + 0 * tileSize / 2, y * tileSize + 0 * tileSize / 2, h * hScale);
     vertex(x * tileSize + 2 * tileSize / 2, y * tileSize + 0 * tileSize / 2, h * hScale);
@@ -38,14 +79,15 @@ class Node {
   ArrayList<Node> neighbours() {
     if (neighbours == null) {
       neighbours = new ArrayList<Node>();
-      for (Edge edge : edges()) {
-        if (edge.a == this) { 
-          neighbours.add(edge.b);
-        }
-        if (edge.b == this) { 
-          neighbours.add(edge.a);
-        }
-      }
+      Node node;
+      node = graph.findNode(x, y + 1);
+      if (node != null) { neighbours.add(node); }
+      node = graph.findNode(x, y - 1);
+      if (node != null) { neighbours.add(node); }
+      node = graph.findNode(x + 1, y);
+      if (node != null) { neighbours.add(node); }
+      node = graph.findNode(x - 1, y);
+      if (node != null) { neighbours.add(node); }
     }
     return neighbours;
   }

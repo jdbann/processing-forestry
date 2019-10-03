@@ -22,7 +22,11 @@ void setup() {
 }
 
 void draw() {
-  pointLight(255, 255, 255, width / 2, height / 2, 400);
+  pushMatrix();
+  rotateX(frameCount / 3600.0);
+  pointLight(192, 192, 192, width / 3, 2 * height / 2, 400);
+  popMatrix();
+  ambientLight(72, 72, 72);
   background(0);
   camera(width / 2, 300 + height / 2, 400, width / 2, height / 2, 0, 
        0.0, 1.0, 0.0);

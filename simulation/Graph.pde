@@ -8,6 +8,7 @@ class Graph {
   ArrayList<Node> nodes;
   ArrayList<Edge> edges;
   ArrayList<Path> paths;
+  PShape terrain;
 
   Graph(World initWorld) {
     world = initWorld;
@@ -16,6 +17,17 @@ class Graph {
     paths = new ArrayList<Path>();
     generateNodes();
     generateEdges();
+    bakeTerrain();
+  }
+  
+  void bakeTerrain() {
+    terrain = createShape(GROUP);
+    for(Node node : nodes) {
+      terrain.addChild(node.nodeShape());
+      for (PShape sideShape : node.neighbourSides()) {
+        terrain.addChild(sideShape);
+      }
+    }
   }
 
   void generateNodes() {
@@ -67,14 +79,15 @@ class Graph {
   }
 
   void tick() {
-    for (Node node : nodes) {
-      //if (abs((mouseX - dragX) - node.x * tileSize) < 20 && abs((mouseY - dragY) - node.y * tileSize) < 20) { 
-      //  for (Edge edge : node.edges()) {
-      //    edge.tick();
-      //  }
-      //}
-      node.tick();
-    }
+    shape(terrain);
+    //for (Node node : nodes) {
+    //  //if (abs((mouseX - dragX) - node.x * tileSize) < 20 && abs((mouseY - dragY) - node.y * tileSize) < 20) { 
+    //  //  for (Edge edge : node.edges()) {
+    //  //    edge.tick();
+    //  //  }
+    //  //}
+    //  node.tick();
+    //}
     if (debugGraph) {
       for (Edge edge : edges) {
         edge.tick();
