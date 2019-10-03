@@ -15,7 +15,7 @@ class Node {
     x = initX;
     y = initY;
     occupant = tempOccupant;
-    traversable = !(occupant instanceof Tree);
+    traversable = occupant != null ? occupant.traversable : true;
 
     noiseSeed(graph.world.seed);
     h = noise(x / graph.world.scale, y / graph.world.scale);

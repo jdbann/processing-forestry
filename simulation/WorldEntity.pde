@@ -2,6 +2,7 @@ class WorldEntity {
   World world;
   int x, y;
   Node currentNode;
+  boolean traversable = true;
   
   WorldEntity(World initWorld) {
     world = initWorld;

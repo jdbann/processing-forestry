@@ -1,11 +1,13 @@
 class Tree extends WorldEntity {
   int health, maxHealth;
   float heading;
+  
   Tree(World initWorld) {
     super(initWorld);
     health = 3 + int(random(3));
     maxHealth = health;
     heading = random(2.0 * PI);
+    traversable = false;
   }
   
   void tick() {
