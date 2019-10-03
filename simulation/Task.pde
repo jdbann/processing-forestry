@@ -74,20 +74,29 @@ class ChopTreeTask extends Task {
   }
 
   Path findPathToTree() {
+    Path chosenPath = null;
+    int chosenPathSize = world.w * world.h;
     Path path = person.getPathTo(treeX + 1, treeY);
     if (path != null) { 
-      return path;
+      chosenPath = path;
+      chosenPathSize = path.cameFrom.size();
     }
     path = person.getPathTo(treeX - 1, treeY);
-    if (path != null) { 
-      return path;
+    if (path != null && path.cameFrom.size() < chosenPathSize) { 
+      chosenPath = path;
+      chosenPathSize = path.cameFrom.size();
     }
     path = person.getPathTo(treeX, treeY + 1);
-    if (path != null) { 
-      return path;
+    if (path != null && path.cameFrom.size() < chosenPathSize) { 
+      chosenPath = path;
+      chosenPathSize = path.cameFrom.size();
     }
     path = person.getPathTo(treeX, treeY - 1);
-    return path;
+    if (path != null && path.cameFrom.size() < chosenPathSize) {
+      chosenPath = path;
+      chosenPathSize = path.cameFrom.size();
+    }
+    return chosenPath;
   }
 
   boolean isPossible() {
