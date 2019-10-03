@@ -1,5 +1,5 @@
 class Person extends WorldEntity {
-  int tX, tY, moveSpeed;
+  int moveSpeed;
   String name;
   Path path;
   PersonClient client;
@@ -7,8 +7,6 @@ class Person extends WorldEntity {
 
   Person(World initWorld, String initName) {
     super(initWorld);
-    tX = x;
-    tY = y;
     name = initName;
     client = new PersonClient(this);
     client.register();
