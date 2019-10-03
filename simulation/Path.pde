@@ -67,6 +67,7 @@ class Path {
     stroke(#FF00FF);
     strokeWeight(3);
     Node nextNode = start;
+    nextNode = cameFrom.get(nextNode);
     while (nextNode != null) {
       Node fromNode = cameFrom.get(nextNode);
       if (fromNode != null) {

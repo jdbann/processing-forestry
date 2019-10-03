@@ -1,9 +1,10 @@
 class Person extends WorldEntity {
-  int moveSpeed;
+  float moveSpeed;
   String name;
   Path path;
   PersonClient client;
   Task task;
+  PShape personShape;
 
   Person(World initWorld, String initName) {
     super(initWorld);
@@ -11,16 +12,13 @@ class Person extends WorldEntity {
     client = new PersonClient(this);
     client.register();
     getNextTask();
-    moveSpeed = int(random(2, 5));
+    moveSpeed = int(random(5, 20));
+    personShape = createShape(SPHERE, tileSize / 3.0);
+    personShape.setFill(#FF0000);
+    personShape.setStroke(false);
   }
 
   void tick() {
-    fill(#FF0000);
-    stroke(#FF0000);
-    pushMatrix();
-    translate(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, currentNode.h * hScale + tileSize / 2);
-    sphere(tileSize / 3);
-    popMatrix();
     if (frameCount % moveSpeed == 0) {
       if (task != null) {
         if (task.isComplete()) {
@@ -33,6 +31,20 @@ class Person extends WorldEntity {
     if (path != null) {
       path.tick();
     }
+    Node n;
+    float xM = x, yM = y, hM = currentNode.h;
+    if (path != null) {
+      n = path.cameFrom.get(path.start);
+      if (n != null) {
+        xM = x + (1 + (frameCount % moveSpeed)) * (n.x - x) / moveSpeed;
+        yM = y + (1 + (frameCount % moveSpeed)) * (n.y - y) / moveSpeed;
+        hM = currentNode.h + (1 + (frameCount % moveSpeed)) * (n.h - currentNode.h) / moveSpeed;
+      }
+    }
+    pushMatrix();
+    translate(xM * tileSize + tileSize / 2, yM * tileSize + tileSize / 2, hM * hScale + tileSize / 2);
+    shape(personShape);
+    popMatrix();
   }
 
   void walk() {
