@@ -1,4 +1,5 @@
-class UnreachableException extends Exception {}
+class UnreachableException extends Exception {
+}
 
 class Path {
   Graph graph;
@@ -56,7 +57,7 @@ class Path {
 
     throw new UnreachableException();
   }
-  
+
   Node nextStep() {
     start = cameFrom.get(start);
     return start;
@@ -72,9 +73,9 @@ class Path {
         line(
           fromNode.x * tileSize + tileSize / 2, 
           fromNode.y * tileSize + tileSize / 2, 
-          fromNode.h * hScale + tileSize / 2,
+          fromNode.h * hScale + tileSize / 2, 
           nextNode.x * tileSize + tileSize / 2, 
-          nextNode.y * tileSize + tileSize / 2,
+          nextNode.y * tileSize + tileSize / 2, 
           nextNode.h * hScale + tileSize / 2
           );
         nextNode = fromNode;

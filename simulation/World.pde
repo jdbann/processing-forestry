@@ -40,21 +40,21 @@ class World {
     entities.add(new Person(this, name));
     resetGraph();
   }
-  
+
   void addTrees(int count) {
     for (int i = 0; i < count; i++) {
       entities.add(new Tree(this));
     }
     resetGraph();
   }
-  
+
   void addLogs(int count) {
     for (int i = 0; i < count; i++) {
       entities.add(new Log(this));
     }
     resetGraph();
   }
-  
+
   void resetGraph() {
     graph = new Graph(this);
   }

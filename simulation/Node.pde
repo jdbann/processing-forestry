@@ -19,12 +19,12 @@ class Node {
     noiseSeed(graph.world.seed);
     h = noise(x / graph.world.scale, y / graph.world.scale);
   }
-  
+
   void setOccupant(WorldEntity newOccupant) {
     occupant = newOccupant;
     traversable = occupant != null ? occupant.traversable : true;
   }
-  
+
   PShape nodeShape() {
     PShape nodeShape = createShape();
     nodeShape.setFill(color(#667761));
@@ -37,7 +37,7 @@ class Node {
     nodeShape.endShape();
     return nodeShape;
   }
-  
+
   ArrayList<PShape> neighbourSides() {
     ArrayList<PShape> sides = new ArrayList<PShape>();
     for (Node neighbour : neighbours()) {
@@ -81,21 +81,29 @@ class Node {
       neighbours = new ArrayList<Node>();
       Node node;
       node = graph.findNode(x, y + 1);
-      if (node != null) { neighbours.add(node); }
+      if (node != null) { 
+        neighbours.add(node);
+      }
       node = graph.findNode(x, y - 1);
-      if (node != null) { neighbours.add(node); }
+      if (node != null) { 
+        neighbours.add(node);
+      }
       node = graph.findNode(x + 1, y);
-      if (node != null) { neighbours.add(node); }
+      if (node != null) { 
+        neighbours.add(node);
+      }
       node = graph.findNode(x - 1, y);
-      if (node != null) { neighbours.add(node); }
+      if (node != null) { 
+        neighbours.add(node);
+      }
     }
     return neighbours;
   }
-  
+
   ArrayList<Node> traversableNeighbours() {
     if (traversableNeighbours == null) {
       traversableNeighbours = new ArrayList<Node>();
-      for(Node neighbour : neighbours()) {
+      for (Node neighbour : neighbours()) {
         if (neighbour.traversable && abs(h - neighbour.h) < stepHeight) {
           traversableNeighbours.add(neighbour);
         }

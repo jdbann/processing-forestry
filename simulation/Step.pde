@@ -1,17 +1,19 @@
 class Step {
   Person person;
-  
+
   Step(Person tempPerson) {
     person = tempPerson;
   }
-  
-  void tick() {};
-  
+
+  void tick() {
+  };
+
   boolean isComplete() {
     return true;
   }
-  
-  void begin() {}
+
+  void begin() {
+  }
 }
 
 class WalkStep extends Step {
@@ -21,15 +23,15 @@ class WalkStep extends Step {
     x = tempX;
     y = tempY;
   }
-  
+
   void tick() {
     person.walk();
   }
-  
+
   boolean isComplete() {
     return person.x == x && person.y == y;
   }
-  
+
   void begin() {
     person.setDestination(x, y);
   }
@@ -42,7 +44,7 @@ class ChopTreeStep extends Step {
     super(person);
     treeX = tempTreeX;
     treeY = tempTreeY;
-    for(WorldEntity entity : person.world.entities) {
+    for (WorldEntity entity : person.world.entities) {
       if (!(entity instanceof Tree)) {
         break;
       }
@@ -51,11 +53,11 @@ class ChopTreeStep extends Step {
       }
     }
   }
-  
+
   void tick() {
     tree.chop();
   }
-  
+
   boolean isComplete() {
     if (tree == null) {
       return true;

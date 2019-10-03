@@ -3,7 +3,7 @@ class WorldEntity {
   int x, y;
   Node currentNode;
   boolean traversable = true;
-  
+
   WorldEntity(World initWorld) {
     world = initWorld;
     while (true) {
@@ -17,13 +17,13 @@ class WorldEntity {
       }
     }
   }
-  
+
   void setCurrentNode(Node node) {
     currentNode = node;
     x = node.x;
     y = node.y;
   }
-  
+
   void tick() {
   }
 }

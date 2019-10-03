@@ -1,4 +1,4 @@
-int worldMin = 20;
+int worldMin = 30;
 int worldMax = 30;
 int tileSize = 16;
 int treeCount = 80;
@@ -29,10 +29,10 @@ void draw() {
   rotateX(frameCount / 3600.0);
   pointLight(192, 192, 192, width / 3, 2 * height / 2, 400);
   popMatrix();
-  ambientLight(72, 72, 72);
+  ambientLight(128, 128, 128);
   background(0);
   camera(width / 2, 300 + height / 2, 200, width / 2, height / 2, 0, 
-       0.0, 1.0, 0.0);
+    0.0, 1.0, 0.0);
   translate(width / 2, height / 2);
   ellipseMode(CORNER);
   rotateX(xRotation / 180.0);

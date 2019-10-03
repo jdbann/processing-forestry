@@ -19,10 +19,10 @@ class Graph {
     generateEdges();
     bakeTerrain();
   }
-  
+
   void bakeTerrain() {
     terrain = createShape(GROUP);
-    for(Node node : nodes) {
+    for (Node node : nodes) {
       terrain.addChild(node.nodeShape());
       for (PShape sideShape : node.neighbourSides()) {
         terrain.addChild(sideShape);
@@ -50,11 +50,15 @@ class Graph {
 
   void generateEdges() {
     for (Node node : nodes) {
-      if (!node.traversable) { continue; }
+      if (!node.traversable) { 
+        continue;
+      }
       Node rightNode = null;
       Node bottomNode = null;
       for (Node rNode : nodes) {
-        if (!rNode.traversable) { continue; }
+        if (!rNode.traversable) { 
+          continue;
+        }
         if (rNode.x == node.x + 1 && rNode.y == node.y) {
           if (abs(rNode.h - node.h) < stepHeight) {
             rightNode = rNode;

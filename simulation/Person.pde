@@ -49,7 +49,7 @@ class Person extends WorldEntity {
     reportIfTreeAt(x, y - 1);
     reportIfTreeAt(x, y + 1);
   }
-  
+
   void reportIfTreeAt(int cX, int cY) {
     if (cX >= 0 && cX < world.w && cY >= 0&& cY < world.h) {
       WorldEntity occupant = world.graph.findNode(cX, cY).occupant;
@@ -58,7 +58,7 @@ class Person extends WorldEntity {
       }
     }
   }
-  
+
   void getNextTask() {
     ArrayList<Task> tasks = client.getTasks();
     while (tasks.size() > 0) {
@@ -73,15 +73,16 @@ class Person extends WorldEntity {
     }
     task = null;
   }
-  
+
   Path getPathTo(int destinationX, int destinationY) {
     try {
       return new Path(world.graph, destinationX, destinationY, x, y);
-    } catch (UnreachableException e) {
+    } 
+    catch (UnreachableException e) {
       return null;
     }
   }
-  
+
   void setDestination(int destinationX, int destinationY) {
     path = getPathTo(destinationX, destinationY);
   }

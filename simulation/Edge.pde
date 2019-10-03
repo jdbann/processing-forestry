@@ -11,9 +11,9 @@ class Edge {
     line(
       a.x * tileSize + tileSize / 2, 
       a.y * tileSize + tileSize / 2, 
-      a.h * hScale + tileSize / 2,
+      a.h * hScale + tileSize / 2, 
       b.x * tileSize + tileSize / 2, 
-      b.y * tileSize + tileSize / 2,
+      b.y * tileSize + tileSize / 2, 
       b.h * hScale + tileSize / 2
       );
   }

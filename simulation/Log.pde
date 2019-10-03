@@ -1,13 +1,13 @@
 class Log extends WorldEntity {
   PShape logPileShape;
   int logPileShapeCount, logCount;
-  
+
   Log(World world) {
     super(world);
     logCount = int(random(12));
     traversable = false;
   }
-  
+
   void tick() {
     pushMatrix();
     translate(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, currentNode.h * hScale);
@@ -15,7 +15,7 @@ class Log extends WorldEntity {
     shape(logPileShape(logCount));
     popMatrix();
   }
-  
+
   PShape logPileShape(int numberOfLogs) {
     if (logPileShape == null || logCount != logPileShapeCount) {
       logPileShape = createShape(GROUP);

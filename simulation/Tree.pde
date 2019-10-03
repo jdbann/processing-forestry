@@ -1,10 +1,8 @@
-
-
 class Tree extends WorldEntity {
   int health, maxHealth;
   float heading;
   PShape treeShape;
-  
+
   Tree(World initWorld) {
     super(initWorld);
     health = 3 + int(random(3));
@@ -24,7 +22,7 @@ class Tree extends WorldEntity {
     treeShape.addChild(leaves);
     treeShape.addChild(trunk);
   }
-  
+
   void tick() {
     float damage = 1 - (health / float(maxHealth)); 
     pushMatrix();
@@ -34,7 +32,7 @@ class Tree extends WorldEntity {
     shape(treeShape);
     popMatrix();
   }
-  
+
   void chop() {
     health --;
     if (health <= 0) {
