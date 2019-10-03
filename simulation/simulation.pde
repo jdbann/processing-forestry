@@ -2,6 +2,7 @@ int worldMin = 20;
 int worldMax = 30;
 int tileSize = 16;
 int treeCount = 80;
+int logCount = 4;
 
 int zRotation, xRotation, zoom;
 World world;
@@ -16,6 +17,7 @@ void setup() {
   zoom = 200;
 
   world.addTrees(treeCount);
+  world.addLogs(logCount);
 
   world.addPerson("John");
   world.addPerson("Adam");

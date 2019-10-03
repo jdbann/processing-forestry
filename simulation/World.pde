@@ -48,6 +48,13 @@ class World {
     resetGraph();
   }
   
+  void addLogs(int count) {
+    for (int i = 0; i < count; i++) {
+      entities.add(new Log(this));
+    }
+    resetGraph();
+  }
+  
   void resetGraph() {
     graph = new Graph(this);
   }
