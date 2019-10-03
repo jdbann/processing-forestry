@@ -14,11 +14,15 @@ class Node {
     graph = tempGraph;
     x = initX;
     y = initY;
-    occupant = tempOccupant;
-    traversable = occupant != null ? occupant.traversable : true;
+    setOccupant(tempOccupant);
 
     noiseSeed(graph.world.seed);
     h = noise(x / graph.world.scale, y / graph.world.scale);
+  }
+  
+  void setOccupant(WorldEntity newOccupant) {
+    occupant = newOccupant;
+    traversable = occupant != null ? occupant.traversable : true;
   }
 
   void tick() {

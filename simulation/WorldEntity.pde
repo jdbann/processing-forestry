@@ -11,7 +11,7 @@ class WorldEntity {
       y = int(random(world.h));
       Node node = world.graph.findNode(x, y);
       if (node.occupant == null) {
-        node.occupant = this;
+        node.setOccupant(this);
         setCurrentNode(node);
         break;
       }
