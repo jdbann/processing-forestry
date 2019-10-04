@@ -26,11 +26,17 @@ class Person extends WorldEntity {
         } else {
           task.tick();
         }
+      } else {
+        getNextTask();
       }
     }
     if (path != null) {
       path.tick();
     }
+    drawPerson();
+  }
+  
+  void drawPerson() {
     Node n;
     float xM = x, yM = y, hM = currentNode.h;
     if (path != null) {
@@ -43,6 +49,19 @@ class Person extends WorldEntity {
     }
     pushMatrix();
     translate(xM * tileSize + tileSize / 2, yM * tileSize + tileSize / 2, hM * hScale + tileSize / 2);
+    if (task == null) { personShape.setFill(#FF0000); } else {
+      switch(task.type) {
+        case "walk":
+          personShape.setFill(#00FF00);
+          break;
+        case "chopTree":
+          personShape.setFill(#0000FF);
+          break;
+        default:
+          personShape.setFill(#FFFFFF);
+          break;
+      }
+    }
     shape(personShape);
     popMatrix();
   }
@@ -54,7 +73,7 @@ class Person extends WorldEntity {
       y = next.y;
       setCurrentNode(next);
     } else {
-      arrived();
+      complete();
     }
     reportIfAnythingAt(x - 1, y);
     reportIfAnythingAt(x + 1, y);
@@ -75,7 +94,9 @@ class Person extends WorldEntity {
   }
 
   void getNextTask() {
+    println("Getting tasks");
     ArrayList<Task> tasks = client.getTasks();
+    if (tasks.size() == 0) { println("No tasks available"); }
     while (tasks.size() > 0) {
       Task nextTask = tasks.get(0);
       tasks.remove(nextTask);
@@ -84,6 +105,8 @@ class Person extends WorldEntity {
         task = nextTask;
         task.begin();
         return;
+      } else {
+        client.reportImpossible(nextTask);
       }
     }
     task = null;
@@ -102,7 +125,7 @@ class Person extends WorldEntity {
     path = getPathTo(destinationX, destinationY);
   }
 
-  void arrived() {
+  void complete() {
     //getNextTask();
   }
 }

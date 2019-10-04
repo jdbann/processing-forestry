@@ -14,6 +14,10 @@ class Task
   end
 
   def possible_for?(person)
+    !impossible_for?(person)
+  end
+
+  def impossible_for?(person)
     @impossible_for.include?(person)
   end
 

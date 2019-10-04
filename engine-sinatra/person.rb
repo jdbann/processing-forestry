@@ -13,9 +13,9 @@ class Person
     @@people
   end
 
-  def self.find(id)
+  def self.find(name)
     @@people.detect do |person|
-      person.id == id
+      person.name == name
     end
   end
 

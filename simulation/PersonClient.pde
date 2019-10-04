@@ -6,7 +6,7 @@ class PersonClient extends Client {
   }
 
   GetRequest get(String route) {
-    GetRequest req = super.get(route);
+    GetRequest req = super.get("/people/" + person.name + route);
     req.addHeader("Person", person.name);
     return req;
   }
@@ -70,6 +70,11 @@ class PersonClient extends Client {
   void confirmTask(Task task) {
     PostRequest post = post("/tasks");
     post.addData("id", task.id);
+    post.send();
+  }
+  
+  void reportImpossible(Task task) {
+    PostRequest post = post("/tasks/" + task.id + "/impossible");
     post.send();
   }
 }

@@ -6,12 +6,18 @@ class TaskList
     @@tasks.uniq!
   end
 
+  def self.find(id)
+    tasks.find do |task|
+      task.id == id
+    end
+  end
+
   def self.tasks
     @@tasks.sort_by(&:type)
   end
 
   def self.tasks_for(person)
-    tasks.filter do |task|
+    tasks.select do |task|
       task.possible_for?(person)
     end
   end

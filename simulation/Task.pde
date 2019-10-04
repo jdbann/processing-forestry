@@ -1,12 +1,13 @@
 class Task {
   Person person;
-  String id;
+  String id, type;
   int destinationX, destinationY;
   ArrayList<Step> steps;
   Task(Person tempPerson, String tempId) {
     person = tempPerson;
     id = tempId;
     steps = new ArrayList<Step>();
+    type = "unknown";
   }
 
   void begin() {
@@ -46,6 +47,7 @@ class WalkTask extends Task {
     x = tempX;
     y = tempY;
     steps.add(new WalkStep(person, tempX, tempY));
+    type = "walk";
   }
 
   boolean isPossible() {
@@ -71,6 +73,7 @@ class ChopTreeTask extends Task {
       steps.add(new WalkStep(person, destination.x, destination.y));
       steps.add(new ChopTreeStep(person, treeX, treeY));
     }
+    type = "chopTree";
   }
 
   Path findPathToTree() {
