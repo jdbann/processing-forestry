@@ -69,7 +69,7 @@ class Person extends WorldEntity {
         client.reportTree(cX, cY);
       }
       if (occupant instanceof Log) {
-        client.reportLog(cX, cY);
+        client.reportLog((Log) occupant);
       }
     }
   }

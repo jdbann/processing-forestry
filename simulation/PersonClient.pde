@@ -31,10 +31,11 @@ class PersonClient extends Client {
     post.send();
   }
   
-  void reportLog(int x, int y) {
+  void reportLog(Log log) {
     PostRequest post = super.post("/logs");
-    post.addData("x", str(x));
-    post.addData("y", str(y));
+    post.addData("x", str(log.x));
+    post.addData("y", str(log.y));
+    post.addData("quantity", str(log.logCount));
     post.send();
   }
 
