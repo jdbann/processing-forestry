@@ -7,13 +7,19 @@ class TaskList
   end
 
   def self.find(id)
-    tasks.find do |task|
+    tasks.detect do |task|
       task.id == id
     end
   end
 
   def self.tasks
-    @@tasks.sort_by(&:type)
+    @@tasks.sort_by(&:type).select do |task|
+      if task.type == "moveLog" && task.data[:log_x] == 0 && task.data[:log_y] == 0
+        false
+      else
+        true
+      end
+    end
   end
 
   def self.tasks_for(person)

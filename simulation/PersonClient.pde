@@ -62,6 +62,9 @@ class PersonClient extends Client {
       case "chopTree":
         tasks.add(new ChopTreeTask(person, jsonTask.getString("id"), jsonTask.getInt("x"), jsonTask.getInt("y")));
         break;
+      case "moveLog":
+        tasks.add(new MoveLogTask(person, jsonTask.getString("id"), jsonTask.getInt("log_x"), jsonTask.getInt("log_y"), jsonTask.getInt("drop_x"), jsonTask.getInt("drop_y")));
+        break;
       }
     }
     return tasks;

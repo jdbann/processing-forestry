@@ -37,4 +37,13 @@ class Log extends WorldEntity {
     }
     return logPileShape;
   }
+  
+  boolean removeLog() {
+    if (logCount == 0) { return false; }
+    logCount --;
+    if (logCount == 0) {
+      world.toRemove.add(this);
+    }
+    return true;
+  }
 }

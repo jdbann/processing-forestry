@@ -1,6 +1,6 @@
 class Person extends WorldEntity {
   float moveSpeed;
-  String name;
+  String name, carrying;
   Path path;
   PersonClient client;
   Task task;
@@ -12,10 +12,11 @@ class Person extends WorldEntity {
     client = new PersonClient(this);
     client.register();
     getNextTask();
-    moveSpeed = int(random(5, 20));
+    moveSpeed = int(random(3, 10));
     personShape = createShape(SPHERE, tileSize / 3.0);
     personShape.setFill(#FF0000);
     personShape.setStroke(false);
+    carrying = null;
   }
 
   void tick() {
@@ -57,6 +58,9 @@ class Person extends WorldEntity {
         case "chopTree":
           personShape.setFill(#0000FF);
           break;
+        case "moveLog":
+          personShape.setFill(#FFFF00);
+          break;
         default:
           personShape.setFill(#FFFFFF);
           break;
@@ -94,9 +98,7 @@ class Person extends WorldEntity {
   }
 
   void getNextTask() {
-    println("Getting tasks");
     ArrayList<Task> tasks = client.getTasks();
-    if (tasks.size() == 0) { println("No tasks available"); }
     while (tasks.size() > 0) {
       Task nextTask = tasks.get(0);
       tasks.remove(nextTask);
@@ -127,5 +129,9 @@ class Person extends WorldEntity {
 
   void complete() {
     //getNextTask();
+  }
+  
+  void pickUpLog() {
+    carrying = "log";
   }
 }

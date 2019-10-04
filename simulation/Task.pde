@@ -16,13 +16,18 @@ class Task {
   }
 
   void tick() {
+    ArrayList<Step> toRemove = new ArrayList<Step>();
     for (Step step : steps) {
       if (step.isComplete()) {
+        toRemove.add(step);
         continue;
       }
 
       step.tick();
-      return;
+      break;
+    }
+    for (Step step : toRemove) {
+      steps.remove(step);
     }
   }
 
@@ -103,11 +108,79 @@ class ChopTreeTask extends Task {
   }
 
   boolean isPossible() {
-    Path path = findPathToTree();
-    if (path != null) {
-      return true;
-    } else {
-      return false;
+    Tree tree = null;
+    for (WorldEntity entity : person.world.entities) {
+      if (!(entity instanceof Tree)) {
+        continue;
+      }
+      if (entity.x == treeX && entity.y == treeY) {
+        tree = (Tree)entity;
+      }
     }
+    Path path = findPathToTree();
+    return path != null && tree != null;
+  }
+}
+
+class MoveLogTask extends Task {
+  int startX, startY, endX, endY;
+  Path startPath, endPath;
+  
+  MoveLogTask(Person person, String id, int tempStartX, int tempStartY, int tempEndX, int tempEndY) {
+    super(person, id);
+    startX = tempStartX;
+    startY = tempStartY;
+    endX = tempEndX;
+    endY = tempEndY;
+    startPath = findPathTo(startX, startY);
+    endPath = findPathTo(endX, endY);
+    if (startPath != null && endPath != null) {
+      Node startDestination = startPath.end;
+      Node endDestination = endPath.end;
+      steps.add(new WalkStep(person, startDestination.x, startDestination.y));
+      steps.add(new PickUpLog(person, startX, startY));
+      steps.add(new WalkStep(person, endDestination.x, endDestination.y));
+      steps.add(new DropLog(person, endX, endY));
+    }
+    type = "moveLog";
+  }
+  
+  boolean isPossible() {
+    Log log = null;
+    for (WorldEntity entity : person.world.entities) {
+      if (!(entity instanceof Log)) {
+        continue;
+      }
+      if (entity.x == startX && entity.y == startY) {
+        log = (Log)entity;
+      }
+    }
+    return (startPath != null && endPath != null && person.carrying == null && log != null);
+  }
+  
+  Path findPathTo(int x, int y) {
+    Path chosenPath = null;
+    int chosenPathSize = world.w * world.h;
+    Path path = person.getPathTo(x + 1, y);
+    if (path != null) { 
+      chosenPath = path;
+      chosenPathSize = path.cameFrom.size();
+    }
+    path = person.getPathTo(x - 1, y);
+    if (path != null && path.cameFrom.size() < chosenPathSize) { 
+      chosenPath = path;
+      chosenPathSize = path.cameFrom.size();
+    }
+    path = person.getPathTo(x, y + 1);
+    if (path != null && path.cameFrom.size() < chosenPathSize) { 
+      chosenPath = path;
+      chosenPathSize = path.cameFrom.size();
+    }
+    path = person.getPathTo(x, y - 1);
+    if (path != null && path.cameFrom.size() < chosenPathSize) {
+      chosenPath = path;
+      chosenPathSize = path.cameFrom.size();
+    }
+    return chosenPath;
   }
 }
