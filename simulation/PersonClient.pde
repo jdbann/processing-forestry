@@ -50,21 +50,23 @@ class PersonClient extends Client {
     GetRequest get = get("/tasks");
     get.send();
     ArrayList<Task> tasks = new ArrayList<Task>();
-    JSONObject jsonResponse = parseJSONObject(get.getContent());
-    JSONArray jsonTasks = jsonResponse.getJSONArray("tasks");
-
-    for (int i = 0; i < jsonTasks.size(); i++) {
-      JSONObject jsonTask = jsonTasks.getJSONObject(i);
-      switch(jsonTask.getString("type")) {
-      case "walk":
-        tasks.add(new WalkTask(person, jsonTask.getString("id"), jsonTask.getInt("x"), jsonTask.getInt("y")));
-        break;
-      case "chopTree":
-        tasks.add(new ChopTreeTask(person, jsonTask.getString("id"), jsonTask.getInt("x"), jsonTask.getInt("y")));
-        break;
-      case "moveLog":
-        tasks.add(new MoveLogTask(person, jsonTask.getString("id"), jsonTask.getInt("log_x"), jsonTask.getInt("log_y"), jsonTask.getInt("drop_x"), jsonTask.getInt("drop_y")));
-        break;
+    if (get.getContent() != null) {
+      JSONObject jsonResponse = parseJSONObject(get.getContent());
+      JSONArray jsonTasks = jsonResponse.getJSONArray("tasks");
+  
+      for (int i = 0; i < jsonTasks.size(); i++) {
+        JSONObject jsonTask = jsonTasks.getJSONObject(i);
+        switch(jsonTask.getString("type")) {
+        case "walk":
+          tasks.add(new WalkTask(person, jsonTask.getString("id"), jsonTask.getInt("x"), jsonTask.getInt("y")));
+          break;
+        case "chopTree":
+          tasks.add(new ChopTreeTask(person, jsonTask.getString("id"), jsonTask.getInt("x"), jsonTask.getInt("y")));
+          break;
+        case "moveLog":
+          tasks.add(new MoveLogTask(person, jsonTask.getString("id"), jsonTask.getInt("log_x"), jsonTask.getInt("log_y"), jsonTask.getInt("drop_x"), jsonTask.getInt("drop_y")));
+          break;
+        }
       }
     }
     return tasks;
