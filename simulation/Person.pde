@@ -5,6 +5,7 @@ class Person extends WorldEntity {
   PersonClient client;
   Task task;
   PShape personShape;
+  int noTaskCount;
 
   Person(World initWorld, String initName) {
     super(initWorld);
@@ -17,6 +18,7 @@ class Person extends WorldEntity {
     personShape.setFill(#FF0000);
     personShape.setStroke(false);
     carrying = null;
+    noTaskCount = 0;
   }
 
   void tick() {
@@ -106,10 +108,17 @@ class Person extends WorldEntity {
         client.confirmTask(nextTask);
         task = nextTask;
         task.begin();
+        noTaskCount = 0;
         return;
       } else {
         client.reportImpossible(nextTask);
       }
+    }
+    noTaskCount ++;
+    if (noTaskCount > 10) {
+      task = new WanderTask(this);
+      task.begin();
+      return;
     }
     task = null;
   }

@@ -65,6 +65,22 @@ class WalkTask extends Task {
   }
 }
 
+class WanderTask extends Task {
+  int x, y;
+  WanderTask(Person person) {
+    super(person, "wander_" + person.name);
+    Path path = null;
+    while (path == null) {
+      
+      x = person.x + int(random(3)) - 1;
+      y = person.y + int(random(3)) - 1;
+      path = person.getPathTo(x, y);
+    }
+    steps.add(new WalkStep(person, x, y));
+    type = "wander";
+  }
+}
+
 class ChopTreeTask extends Task {
   int treeX, treeY;
 
