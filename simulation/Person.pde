@@ -8,31 +8,34 @@ class Person extends WorldEntity {
   Task task;
   PShape personShape;
   int noTaskCount;
+  GetNextTaskThread thread;
 
   Person(World initWorld) {
     super(initWorld);
     id = UUID.randomUUID().toString();
     client = new PersonClient(this);
     client.register();
-    getNextTask();
+    task = null;
     moveSpeed = int(random(3, 10));
     personShape = createShape(SPHERE, tileSize / 3.0);
     personShape.setFill(#FF0000);
     personShape.setStroke(false);
     carrying = null;
     noTaskCount = 0;
+    thread = new GetNextTaskThread(this);
+    thread.start();
   }
 
   void tick() {
     if (frameCount % moveSpeed == 0) {
       if (task != null) {
         if (task.isComplete()) {
-          getNextTask();
+          task = null;
         } else {
           task.tick();
         }
       } else {
-        getNextTask();
+        task = null;
       }
     }
     if (path != null) {
@@ -103,19 +106,22 @@ class Person extends WorldEntity {
 
   void getNextTask() {
     ArrayList<Task> tasks = client.getTasks();
-    while (tasks.size() > 0) {
-      Task nextTask = tasks.get(0);
-      tasks.remove(nextTask);
-      if (nextTask.isPossible()) {
-        client.confirmTask(nextTask);
-        task = nextTask;
+    if (tasks.size() > 0) {
+      ArrayList<Task> possibleTasks = new ArrayList<Task>();
+      for (Task nextTask : tasks) {
+        if (nextTask.isPossible()) { possibleTasks.add(nextTask); } else { client.reportImpossible(nextTask); }
+      }
+      Collections.sort(possibleTasks);
+      
+      if (possibleTasks.size() > 0) {
+        task = possibleTasks.get(0);
+        client.confirmTask(task);
         task.begin();
         noTaskCount = 0;
         return;
-      } else {
-        client.reportImpossible(nextTask);
       }
     }
+    
     noTaskCount ++;
     if (noTaskCount > 10) {
       task = new WanderTask(this);
@@ -144,5 +150,23 @@ class Person extends WorldEntity {
   
   void pickUpLog() {
     carrying = "log";
+  }
+}
+
+class GetNextTaskThread extends Thread {
+  Person person;
+  
+  GetNextTaskThread(Person tempPerson) {
+    super();
+    person = tempPerson;
+  }
+  
+  void run() {
+    while (true) {
+      if (person.task == null) {
+        person.getNextTask();
+      }
+      delay(100);
+    }
   }
 }

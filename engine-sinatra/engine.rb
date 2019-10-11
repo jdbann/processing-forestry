@@ -56,7 +56,7 @@ end
 
 get "/people/:person_id/tasks" do
   person = Person.find(params[:person_id])
-  { tasks: TaskList.tasks_for(person).take(5) }.to_json
+  { tasks: TaskList.tasks_for(person).take(50) }.to_json
 end
 
 post "/people/:person_id/tasks" do

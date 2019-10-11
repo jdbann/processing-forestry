@@ -110,7 +110,8 @@ class PickUpLog extends Step {
   }
   
   boolean isComplete() {
-    return (person.carrying == "log" || findLog().logCount == 0);
+    log = findLog();
+    return (person.carrying == "log" || log == null || log.logCount == 0);
   }
 }
 

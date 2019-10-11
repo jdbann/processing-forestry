@@ -1,13 +1,15 @@
-class Task {
+class Task implements Comparable<Task> {
   Person person;
   String id, type;
-  int destinationX, destinationY;
+  int destinationX, destinationY, expense;
   ArrayList<Step> steps;
+  
   Task(Person tempPerson, String tempId) {
     person = tempPerson;
     id = tempId;
     steps = new ArrayList<Step>();
     type = "unknown";
+    expense = person.world.w * person.world.h;
   }
 
   void begin() {
@@ -43,16 +45,24 @@ class Task {
   boolean isPossible() {
     return false;
   }
+  
+  public int compareTo(Task task) {
+    return expense - task.expense;
+  }
 }
 
 class WalkTask extends Task {
   int x, y;
+  Path path;
+  
   WalkTask(Person person, String id, int tempX, int tempY) {
     super(person, id);
     x = tempX;
     y = tempY;
     steps.add(new WalkStep(person, tempX, tempY));
     type = "walk";
+    path = person.getPathTo(x, y);
+    if (path != null) { expense = path.cameFrom.size(); }
   }
 
   boolean isPossible() {
@@ -71,7 +81,6 @@ class WanderTask extends Task {
     super(person, "wander_" + person.id);
     Path path = null;
     while (path == null) {
-      
       x = person.x + int(random(3)) - 1;
       y = person.y + int(random(3)) - 1;
       path = person.getPathTo(x, y);
@@ -95,6 +104,7 @@ class ChopTreeTask extends Task {
       steps.add(new ChopTreeStep(person, treeX, treeY));
     }
     type = "chopTree";
+    if (path != null) { expense = path.cameFrom.size(); }
   }
 
   Path findPathToTree() {
@@ -159,6 +169,7 @@ class MoveLogTask extends Task {
       steps.add(new DropLog(person, endX, endY));
     }
     type = "moveLog";
+    if (startPath != null) { expense = startPath.cameFrom.size(); }
   }
   
   boolean isPossible() {
