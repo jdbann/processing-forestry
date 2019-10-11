@@ -50,4 +50,5 @@ void keyPressed() {
 
 void mouseWheel(MouseEvent event) {
   zoom -= event.getCount();
+  zoom = max(100, min(zoom, 300));
 }
