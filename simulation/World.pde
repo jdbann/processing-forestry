@@ -42,8 +42,8 @@ class World {
     popMatrix();
   }
 
-  void addPerson(String name) {
-    entities.add(new Person(this, name));
+  void addPerson() {
+    entities.add(new Person(this));
     resetGraph();
   }
 

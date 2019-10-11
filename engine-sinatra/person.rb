@@ -1,8 +1,8 @@
 class Person
   @@people = []
 
-  def self.add(name)
-    @@people << name
+  def self.add(id)
+    @@people << id
   end
 
   def self.clear
@@ -13,25 +13,25 @@ class Person
     @@people
   end
 
-  def self.find(name)
+  def self.find(id)
     @@people.detect do |person|
-      person.name == name
+      person.id == id
     end
   end
 
-  def initialize(name, x_position, y_position)
-    @name = name
+  def initialize(id, x_position, y_position)
+    @id = id
     @x = x_position
     @y = y_position
   end
 
-  attr_reader :name
+  attr_reader :id
 
   def attributes
-    { name: @name, x: @x, y: @y }
+    { id: @id, x: @x, y: @y }
   end
 
   def ==(person)
-    name == person.name
+    id == person.id
   end
 end

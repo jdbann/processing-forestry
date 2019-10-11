@@ -1,15 +1,17 @@
+import java.util.UUID;
+
 class Person extends WorldEntity {
   float moveSpeed;
-  String name, carrying;
+  String id, carrying;
   Path path;
   PersonClient client;
   Task task;
   PShape personShape;
   int noTaskCount;
 
-  Person(World initWorld, String initName) {
+  Person(World initWorld) {
     super(initWorld);
-    name = initName;
+    id = UUID.randomUUID().toString();
     client = new PersonClient(this);
     client.register();
     getNextTask();

@@ -68,7 +68,7 @@ class WalkTask extends Task {
 class WanderTask extends Task {
   int x, y;
   WanderTask(Person person) {
-    super(person, "wander_" + person.name);
+    super(person, "wander_" + person.id);
     Path path = null;
     while (path == null) {
       

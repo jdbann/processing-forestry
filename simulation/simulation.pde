@@ -19,9 +19,9 @@ void setup() {
   world.addTrees(treeCount);
   world.addLogs(logCount);
 
-  world.addPerson("John");
-  world.addPerson("Adam");
-  world.addPerson("Molly");
+  world.addPerson();
+  world.addPerson();
+  world.addPerson();
 }
 
 void draw() {

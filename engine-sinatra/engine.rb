@@ -43,14 +43,14 @@ get "/logs" do
 end
 
 post "/people" do
-  person = Person.new(params[:name], params[:x], params[:y])
+  person = Person.new(params[:id], params[:x], params[:y])
   Person.add(person)
   person.attributes.to_json
 end
 
 get "/people/:person_id" do
   Person.list.detect do |person|
-    person.name == params[:person_id]
+    person.id == params[:person_id]
   end.attributes.to_json
 end
 

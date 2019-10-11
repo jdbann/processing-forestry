@@ -6,19 +6,19 @@ class PersonClient extends Client {
   }
 
   GetRequest get(String route) {
-    GetRequest req = super.get("/people/" + person.name + route);
-    req.addHeader("Person", person.name);
+    GetRequest req = super.get("/people/" + person.id + route);
+    req.addHeader("Person", person.id);
     return req;
   }
 
   PostRequest post(String route) {
-    PostRequest req = super.post("/people/" + person.name + route);
+    PostRequest req = super.post("/people/" + person.id + route);
     return req;
   }
 
   void register() {
     PostRequest post = super.post("/people");
-    post.addData("name", person.name);
+    post.addData("id", person.id);
     post.addData("x", str(person.x));
     post.addData("y", str(person.y));
     post.send();
