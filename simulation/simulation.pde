@@ -1,5 +1,5 @@
-int worldMin = 30;
-int worldMax = 30;
+int worldMin = 40;
+int worldMax = 60;
 int tileSize = 16;
 int treeCount = 80;
 int logCount = 4;
