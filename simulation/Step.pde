@@ -21,7 +21,7 @@ class Step {
 class WalkStep extends Step {
   int x, y;
   boolean begun;
-  
+
   WalkStep(Person person, int tempX, int tempY) {
     super(person);
     x = tempX;
@@ -30,7 +30,9 @@ class WalkStep extends Step {
   }
 
   void tick() {
-    if (begun == false) { begin(); }
+    if (begun == false) { 
+      begin();
+    }
     person.walk();
   }
 
@@ -79,13 +81,13 @@ class ChopTreeStep extends Step {
 class PickUpLog extends Step {
   int logX, logY;
   Log log;
-  
+
   PickUpLog(Person person, int tempLogX, int tempLogY) {
     super(person);
     logX = tempLogX;
     logY = tempLogY;
   }
-  
+
   void tick() {
     log = findLog();
     if (log != null) {
@@ -96,7 +98,7 @@ class PickUpLog extends Step {
       }
     }
   }
-  
+
   Log findLog() {
     for (WorldEntity entity : person.world.entities) {
       if (!(entity instanceof Log)) {
@@ -108,7 +110,7 @@ class PickUpLog extends Step {
     }
     return null;
   }
-  
+
   boolean isComplete() {
     log = findLog();
     return (person.carrying == "log" || log == null || log.logCount == 0);
@@ -117,13 +119,13 @@ class PickUpLog extends Step {
 
 class DropLog extends Step {
   int dropX, dropY;
-  
+
   DropLog(Person person, int tempDropX, int tempDropY) {
     super(person);
     dropX = tempDropX;
     dropY = tempDropY;
   }
-  
+
   void tick() {
     Log newLog = null;
     for (WorldEntity entity : person.world.entities) {
@@ -134,22 +136,22 @@ class DropLog extends Step {
         newLog = (Log)entity;
       }
     }
-    
-    if(newLog != null) {
+
+    if (newLog != null) {
       newLog.logCount ++;
     } else {
-      newLog = new Log(world);
+      newLog = new Log(person.world);
       newLog.x = dropX;
       newLog.y = dropY;
       newLog.logCount = 1;
-      Node logNode = world.graph.findNode(dropX, dropY);
+      Node logNode = person.world.graph.findNode(dropX, dropY);
       newLog.setCurrentNode(logNode);
       logNode.setOccupant(newLog);
-      world.toAdd.add(newLog);
+      person.world.toAdd.add(newLog);
     }
     person.carrying = null;
   }
-  
+
   boolean isComplete() {
     return (person.carrying == null);
   }

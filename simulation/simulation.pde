@@ -5,23 +5,17 @@ int treeCount = 80;
 int logCount = 4;
 
 int zRotation, xRotation, zoom;
-World world;
+Challenge challenge;
 
 void setup() {
   size(1200, 800, P3D);
   frameRate(60);
 
-  world = new World(int(random(256*256)));
+  challenge = new Challenge();
+
   zRotation = 0;
   xRotation = 0;
   zoom = 200;
-
-  world.addTrees(treeCount);
-  world.addLogs(logCount);
-
-  world.addPerson();
-  world.addPerson();
-  world.addPerson();
 }
 
 void draw() {
@@ -36,7 +30,7 @@ void draw() {
   rotateZ(zRotation / 180.0);
   scale(zoom / 200.0);
 
-  world.tick();
+  challenge.tick();
 }
 
 void mouseDragged() {

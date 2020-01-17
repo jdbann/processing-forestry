@@ -3,7 +3,7 @@ class Task implements Comparable<Task> {
   String id, type;
   int destinationX, destinationY, expense;
   ArrayList<Step> steps;
-  
+
   Task(Person tempPerson, String tempId) {
     person = tempPerson;
     id = tempId;
@@ -45,7 +45,7 @@ class Task implements Comparable<Task> {
   boolean isPossible() {
     return false;
   }
-  
+
   public int compareTo(Task task) {
     return expense - task.expense;
   }
@@ -54,7 +54,7 @@ class Task implements Comparable<Task> {
 class WalkTask extends Task {
   int x, y;
   Path path;
-  
+
   WalkTask(Person person, String id, int tempX, int tempY) {
     super(person, id);
     x = tempX;
@@ -62,7 +62,9 @@ class WalkTask extends Task {
     steps.add(new WalkStep(person, tempX, tempY));
     type = "walk";
     path = person.getPathTo(x, y);
-    if (path != null) { expense = path.cameFrom.size(); }
+    if (path != null) { 
+      expense = path.cameFrom.size();
+    }
   }
 
   boolean isPossible() {
@@ -104,12 +106,14 @@ class ChopTreeTask extends Task {
       steps.add(new ChopTreeStep(person, treeX, treeY));
     }
     type = "chopTree";
-    if (path != null) { expense = path.cameFrom.size(); }
+    if (path != null) { 
+      expense = path.cameFrom.size();
+    }
   }
 
   Path findPathToTree() {
     Path chosenPath = null;
-    int chosenPathSize = world.w * world.h;
+    int chosenPathSize = person.world.w * person.world.h;
     Path path = person.getPathTo(treeX + 1, treeY);
     if (path != null) { 
       chosenPath = path;
@@ -151,7 +155,7 @@ class ChopTreeTask extends Task {
 class MoveLogTask extends Task {
   int startX, startY, endX, endY;
   Path startPath, endPath;
-  
+
   MoveLogTask(Person person, String id, int tempStartX, int tempStartY, int tempEndX, int tempEndY) {
     super(person, id);
     startX = tempStartX;
@@ -169,9 +173,11 @@ class MoveLogTask extends Task {
       steps.add(new DropLog(person, endX, endY));
     }
     type = "moveLog";
-    if (startPath != null) { expense = startPath.cameFrom.size(); }
+    if (startPath != null) { 
+      expense = startPath.cameFrom.size();
+    }
   }
-  
+
   boolean isPossible() {
     Log log = null;
     for (WorldEntity entity : person.world.entities) {
@@ -184,10 +190,10 @@ class MoveLogTask extends Task {
     }
     return (startPath != null && endPath != null && person.carrying == null && log != null);
   }
-  
+
   Path findPathTo(int x, int y) {
     Path chosenPath = null;
-    int chosenPathSize = world.w * world.h;
+    int chosenPathSize = person.world.w * person.world.h;
     Path path = person.getPathTo(x + 1, y);
     if (path != null) { 
       chosenPath = path;

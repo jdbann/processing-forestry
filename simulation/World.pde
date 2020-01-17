@@ -23,7 +23,7 @@ class World {
   void tick() {
     noStroke();
     pushMatrix();
-    translate(-world.width() / 2, -world.height() / 2);
+    translate(-width() / 2, -height() / 2);
     graph.tick();
     for (WorldEntity entity : entities) {
       entity.tick();
