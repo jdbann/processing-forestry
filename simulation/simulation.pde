@@ -5,13 +5,13 @@ int treeCount = 80;
 int logCount = 4;
 
 int zRotation, xRotation, zoom;
-Challenge challenge;
+ChallengeStack challengeStack;
 
 void setup() {
   size(1200, 800, P3D);
   frameRate(60);
 
-  challenge = new Challenge();
+  challengeStack = new ChallengeStack();
 
   zRotation = 0;
   xRotation = 0;
@@ -30,7 +30,7 @@ void draw() {
   rotateZ(zRotation / 180.0);
   scale(zoom / 200.0);
 
-  challenge.tick();
+  challengeStack.tick();
 }
 
 void mouseDragged() {

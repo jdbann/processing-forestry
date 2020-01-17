@@ -15,4 +15,8 @@ class Challenge {
   void tick() {
     world.tick();
   }
+
+  boolean isComplete() {
+    return false;
+  }
 }
