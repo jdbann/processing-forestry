@@ -4,8 +4,7 @@ class ChallengeStack {
 
   ChallengeStack() {
     challengeStack = new ArrayList<Challenge>();
-    challengeStack.add(new Challenge());
-    challengeStack.add(new Challenge());
+    challengeStack.add(new Challenge1());
     challengeStack.add(new Challenge());
     currentChallengeIndex = 0;
   }
