@@ -1,5 +1,6 @@
 class Challenge {
   World world;
+  EventStream stream;
 
   Challenge() {
     world = new World(int(random(256*256)));
@@ -10,6 +11,8 @@ class Challenge {
     world.addPerson();
     world.addPerson();
     world.addPerson();
+
+    stream = new EventStream(this);
   }
 
   void tick() {
