@@ -4,8 +4,4 @@ class Challenge_Sandbox extends Challenge {
 
   void listen(Event e) {
   }
-
-  boolean isComplete() {
-    return false;
-  }
 }

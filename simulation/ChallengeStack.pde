@@ -10,7 +10,7 @@ class ChallengeStack {
   }
 
   void tick() {
-    if (currentChallenge().isComplete()) {
+    if (currentChallenge().complete) {
       currentChallengeIndex ++;
       currentChallengeIndex = min(currentChallengeIndex, challengeStack.size() - 1);
     }
