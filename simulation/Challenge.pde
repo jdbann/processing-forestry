@@ -11,10 +11,6 @@ abstract class Challenge {
 
     world.addTrees(treeCount);
     world.addLogs(logCount);
-
-    world.addPerson();
-    world.addPerson();
-    world.addPerson();
   }
 
   void tick() {
