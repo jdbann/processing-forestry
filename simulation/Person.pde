@@ -9,12 +9,12 @@ class Person extends WorldEntity {
   PShape personShape;
   int noTaskCount;
   GetNextTaskThread thread;
+  boolean registered;
 
   Person(World initWorld) {
     super(initWorld);
     id = UUID.randomUUID().toString();
     client = new PersonClient(this);
-    client.register();
     task = null;
     moveSpeed = int(random(3, 10));
     personShape = createShape(SPHERE, tileSize / 3.0);
@@ -24,9 +24,13 @@ class Person extends WorldEntity {
     noTaskCount = 0;
     thread = new GetNextTaskThread(this);
     thread.start();
+    registered = false;
   }
 
   void tick() {
+    if (registered == false) {
+      registered = client.register();
+    }
     if (frameCount % moveSpeed == 0) {
       if (task != null) {
         if (task.isComplete()) {

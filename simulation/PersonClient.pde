@@ -16,12 +16,16 @@ class PersonClient extends Client {
     return req;
   }
 
-  void register() {
+  boolean register() {
     PostRequest post = super.post("/people");
     post.addData("id", person.id);
     post.addData("x", str(person.x));
     post.addData("y", str(person.y));
     post.send();
+    if (post.status == 200) {
+      return true;
+    }
+    return false;
   }
 
   void reportTree(int x, int y) {
