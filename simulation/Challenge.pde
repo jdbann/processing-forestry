@@ -1,9 +1,11 @@
-class Challenge {
+abstract class Challenge {
   World world;
   EventStream stream;
 
   Challenge() {
-    world = new World(int(random(256*256)));
+    stream = new EventStream(this);
+    int seed = int(random(256*256));
+    world = new World(seed, stream);
 
     world.addTrees(treeCount);
     world.addLogs(logCount);
@@ -11,15 +13,13 @@ class Challenge {
     world.addPerson();
     world.addPerson();
     world.addPerson();
-
-    stream = new EventStream(this);
   }
 
   void tick() {
     world.tick();
   }
 
-  boolean isComplete() {
-    return false;
-  }
+  abstract void listen(Event e);
+
+  abstract boolean isComplete();
 }

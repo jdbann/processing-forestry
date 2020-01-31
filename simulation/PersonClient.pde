@@ -23,6 +23,7 @@ class PersonClient extends Client {
     post.addData("y", str(person.y));
     post.send();
     if (post.status == 200) {
+      person.world.eventStream.emit(new ClientSuccessEvent());
       return true;
     }
     return false;
@@ -54,10 +55,14 @@ class PersonClient extends Client {
     GetRequest get = get("/tasks");
     get.send();
     ArrayList<Task> tasks = new ArrayList<Task>();
-    if (get.getContent() != null) {
+    if (get.status == 200 && get.getContent() != null) {
       JSONObject jsonResponse = parseJSONObject(get.getContent());
       JSONArray jsonTasks = jsonResponse.getJSONArray("tasks");
-  
+
+      if (jsonTasks == null) {
+        return tasks;
+      }
+
       for (int i = 0; i < jsonTasks.size(); i++) {
         JSONObject jsonTask = jsonTasks.getJSONObject(i);
         switch(jsonTask.getString("type")) {

@@ -6,8 +6,9 @@ class World {
   ArrayList<WorldEntity> toAdd;
   WorldClient client;
   Graph graph;
+  EventStream eventStream;
 
-  World(int initSeed) {
+  World(int initSeed, EventStream eventStream_) {
     seed = initSeed;
     randomSeed(seed);
     w = int(random(worldMin, worldMax));
@@ -18,6 +19,7 @@ class World {
     client = new WorldClient(this);
     client.register();
     graph = new Graph(this);
+    eventStream = eventStream_;
   }
 
   void tick() {
