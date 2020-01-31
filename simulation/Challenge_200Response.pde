@@ -1,7 +1,7 @@
-class Challenge1 extends Challenge {
+class Challenge_200Response extends Challenge {
   boolean isComplete;
 
-  Challenge1() {
+  Challenge_200Response() {
     isComplete = false;
   }
 

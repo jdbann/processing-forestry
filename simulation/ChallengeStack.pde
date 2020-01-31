@@ -4,8 +4,8 @@ class ChallengeStack {
 
   ChallengeStack() {
     challengeStack = new ArrayList<Challenge>();
-    challengeStack.add(new Challenge1());
-    challengeStack.add(new Challenge2());
+    challengeStack.add(new Challenge_200Response());
+    challengeStack.add(new Challenge_Sandbox());
     currentChallengeIndex = 0;
   }
 

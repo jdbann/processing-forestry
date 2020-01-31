@@ -1,5 +1,5 @@
-class Challenge2 extends Challenge {
-  Challenge2() {
+class Challenge_Sandbox extends Challenge {
+  Challenge_Sandbox() {
   }
 
   void listen(Event e) {
