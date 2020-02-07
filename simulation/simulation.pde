@@ -6,10 +6,12 @@ int logCount = 4;
 
 int zRotation, xRotation, zoom;
 ChallengeStack challengeStack;
+Config config;
 
 void setup() {
   size(1200, 800, P3D);
   frameRate(60);
+  config = new Config();
 
   challengeStack = new ChallengeStack();
 

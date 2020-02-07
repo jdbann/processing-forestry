@@ -91,10 +91,11 @@ class PostRequest {
   }
 }
 
-String baseUrl = "http://localhost:4567";
-
 class Client {
+  String baseUrl;
+
   Client() {
+    baseUrl = config.baseUrl();
   }
 
   GetRequest get(String route) {
