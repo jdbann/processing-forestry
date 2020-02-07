@@ -25,6 +25,7 @@ void draw() {
   Challenge currentChallenge = challengeStack.currentChallenge();
 
   image(currentChallenge.world.pg, 0, 0);
+  image(currentChallenge.overlay(), 0, 0);
 }
 
 void mouseDragged() {

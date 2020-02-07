@@ -3,6 +3,9 @@ class Challenge_Sandbox extends Challenge {
     world.addPerson();
     world.addPerson();
     world.addPerson();
+
+    title = "Sandbox";
+    description = "Well done! You've completed all the challenges. Now you can just play around!";
   }
 
   void listen(Event e) {
