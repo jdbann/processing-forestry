@@ -23,14 +23,14 @@ class Tree extends WorldEntity {
     treeShape.addChild(trunk);
   }
 
-  void tick() {
+  void tick(PGraphics pg) {
     float damage = 1 - (health / float(maxHealth)); 
-    pushMatrix();
-    translate(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, currentNode.h * hScale);
-    rotateZ(heading);
-    rotateX(damage * PI / 2.0);
-    shape(treeShape);
-    popMatrix();
+    pg.pushMatrix();
+    pg.translate(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, currentNode.h * hScale);
+    pg.rotateZ(heading);
+    pg.rotateX(damage * PI / 2.0);
+    pg.shape(treeShape);
+    pg.popMatrix();
   }
 
   void chop() {

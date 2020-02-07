@@ -63,15 +63,15 @@ class Path {
     return start;
   }
 
-  void tick() {
-    stroke(#FF00FF);
-    strokeWeight(3);
+  void tick(PGraphics pg) {
+    pg.stroke(#FF00FF);
+    pg.strokeWeight(3);
     Node nextNode = start;
     nextNode = cameFrom.get(nextNode);
     while (nextNode != null) {
       Node fromNode = cameFrom.get(nextNode);
       if (fromNode != null) {
-        line(
+        pg.line(
           fromNode.x * tileSize + tileSize / 2, 
           fromNode.y * tileSize + tileSize / 2, 
           fromNode.h * hScale + tileSize / 2, 

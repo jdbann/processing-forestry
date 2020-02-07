@@ -82,8 +82,8 @@ class Graph {
     }
   }
 
-  void tick() {
-    shape(terrain);
+  void tick(PGraphics pg) {
+    pg.shape(terrain);
     //for (Node node : nodes) {
     //  //if (abs((mouseX - dragX) - node.x * tileSize) < 20 && abs((mouseY - dragY) - node.y * tileSize) < 20) { 
     //  //  for (Edge edge : node.edges()) {
@@ -94,7 +94,7 @@ class Graph {
     //}
     if (debugGraph) {
       for (Edge edge : edges) {
-        edge.tick();
+        edge.tick(pg);
       }
     }
   }

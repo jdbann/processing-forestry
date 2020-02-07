@@ -6,9 +6,9 @@ class Edge {
     b = tempB;
   }
 
-  void tick() {
-    stroke(#00FFFF);
-    line(
+  void tick(PGraphics pg) {
+    pg.stroke(#00FFFF);
+    pg.line(
       a.x * tileSize + tileSize / 2, 
       a.y * tileSize + tileSize / 2, 
       a.h * hScale + tileSize / 2, 

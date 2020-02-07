@@ -10,13 +10,13 @@ class Log extends WorldEntity {
     traversable = false;
   }
 
-  void tick() {
-    pushMatrix();
-    translate(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, currentNode.h * hScale);
-    scale(0.5);
-    rotateZ(heading);
-    shape(logPileShape(logCount));
-    popMatrix();
+  void tick(PGraphics pg) {
+    pg.pushMatrix();
+    pg.translate(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, currentNode.h * hScale);
+    pg.scale(0.5);
+    pg.rotateZ(heading);
+    pg.shape(logPileShape(logCount));
+    pg.popMatrix();
   }
 
   PShape logPileShape(int numberOfLogs) {

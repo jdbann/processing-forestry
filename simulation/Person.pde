@@ -27,7 +27,7 @@ class Person extends WorldEntity {
     registered = false;
   }
 
-  void tick() {
+  void tick(PGraphics pg) {
     if (registered == false) {
       registered = client.register();
     }
@@ -43,12 +43,12 @@ class Person extends WorldEntity {
       }
     }
     if (path != null) {
-      path.tick();
+      path.tick(pg);
     }
-    drawPerson();
+    drawPerson(pg);
   }
   
-  void drawPerson() {
+  void drawPerson(PGraphics pg) {
     Node n;
     float xM = x, yM = y, hM = currentNode.h;
     if (path != null) {
@@ -59,8 +59,8 @@ class Person extends WorldEntity {
         hM = currentNode.h + (1 + (frameCount % moveSpeed)) * (n.h - currentNode.h) / moveSpeed;
       }
     }
-    pushMatrix();
-    translate(xM * tileSize + tileSize / 2, yM * tileSize + tileSize / 2, hM * hScale + tileSize / 2);
+    pg.pushMatrix();
+    pg.translate(xM * tileSize + tileSize / 2, yM * tileSize + tileSize / 2, hM * hScale + tileSize / 2);
     if (task == null) { personShape.setFill(#FF0000); } else {
       switch(task.type) {
         case "walk":
@@ -77,8 +77,8 @@ class Person extends WorldEntity {
           break;
       }
     }
-    shape(personShape);
-    popMatrix();
+    pg.shape(personShape);
+    pg.popMatrix();
   }
 
   void walk() {

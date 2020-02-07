@@ -24,6 +24,6 @@ class WorldEntity {
     y = node.y;
   }
 
-  void tick() {
+  void tick(PGraphics pg) {
   }
 }

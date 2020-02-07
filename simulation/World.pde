@@ -7,6 +7,7 @@ class World {
   WorldClient client;
   Graph graph;
   EventStream eventStream;
+  PGraphics pg;
 
   World(int initSeed, EventStream eventStream_) {
     seed = initSeed;
@@ -23,12 +24,24 @@ class World {
   }
 
   void tick() {
-    noStroke();
-    pushMatrix();
-    translate(-width() / 2, -height() / 2);
-    graph.tick();
+    pg = createGraphics(width, height, P3D);
+    pg.beginDraw();
+    pg.camera(width / 2, 300 + height / 2, 200, width / 2, height / 2, 0, 
+        0.0, 1.0, 0.0);
+    pg.translate(width / 2, height / 2);
+    pg.ellipseMode(CORNER);
+    pg.rotateX(xRotation / 180.0);
+    pg.rotateZ(zRotation / 180.0);
+    pg.pointLight(192, 192, 192, width / 3, 400, 2 * height / 2);
+    pg.ambientLight(128, 128, 128);
+    pg.scale(zoom / 200.0);
+
+    pg.noStroke();
+    pg.pushMatrix();
+    pg.translate(-width() / 2, -height() / 2);
+    graph.tick(pg);
     for (WorldEntity entity : entities) {
-      entity.tick();
+      entity.tick(pg);
     }
     if (toRemove.size() > 0 || toAdd.size() > 0) {
       for (WorldEntity entityToRemove : toRemove) {
@@ -41,7 +54,8 @@ class World {
       toAdd.clear();
       resetGraph();
     }
-    popMatrix();
+    pg.popMatrix();
+    pg.endDraw();
   }
 
   void addPerson() {
