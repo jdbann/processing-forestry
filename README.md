@@ -19,6 +19,23 @@ manage their work.
 
 ![Simulation of some wandering lumberjacks](simulation.gif)
 
+## Config
+
+You can define some basic configuration settings by editing the `config.json`
+file:
+
+```json
+{
+  "baseUrl": "http://localhost:4567"
+}
+```
+
+### Config options
+
+|Key|Type|Description|Default|
+|-|-|-|-|
+|`baseUrl`|`String`|Base url for the target server|`http://localhost:4567`|
+
 # With thanks
 
 Many thanks to:
