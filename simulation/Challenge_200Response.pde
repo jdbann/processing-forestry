@@ -7,7 +7,7 @@ class Challenge_200Response extends Challenge {
 
   void listen(Event event) {
     if (event instanceof ClientSuccessEvent) {
-      complete = true;
+      markComplete();
     }
   }
 }

@@ -10,12 +10,17 @@ class ChallengeStack {
   }
 
   void tick() {
-    if (currentChallenge().complete) {
+    if (readyForNextChallenge()) {
       currentChallengeIndex ++;
       currentChallengeIndex = min(currentChallengeIndex, challengeStack.size() - 1);
     }
 
     currentChallenge().tick();
+  }
+
+  boolean readyForNextChallenge() {
+    float challengeTransitionDuration = frameRate * 5;
+    return currentChallenge().complete && frameCount - currentChallenge().completedAt >= challengeTransitionDuration;
   }
 
   Challenge currentChallenge() {

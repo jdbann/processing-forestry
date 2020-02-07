@@ -3,6 +3,7 @@ abstract class Challenge {
   EventStream stream;
   boolean complete;
   String title, description;
+  int completedAt;
 
   PGraphics overlay;
 
@@ -35,9 +36,21 @@ abstract class Challenge {
     overlay.textSize(32);
     overlay.fill(255);
     overlay.text(title, 32, 64);
-    overlay.textSize(16);
-    overlay.text(description, 32, 96, 400, height);
+    if (complete) {
+      overlay.text("Complete!", 32, 96, 400, height);
+    } else {
+      overlay.textSize(16);
+      overlay.text(description, 32, 96, 400, height);
+    }
     overlay.endDraw();
     return overlay;
+  }
+
+  void markComplete() {
+    if (complete == false) {
+      complete = true;
+      overlay = null;
+      completedAt = frameCount;
+    }
   }
 }
