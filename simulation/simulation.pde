@@ -10,6 +10,9 @@ ChallengeStack challengeStack;
 void setup() {
   size(1200, 800, P3D);
   frameRate(60);
+  pixelDensity(displayDensity());
+
+  surface.setTitle("Forestry");
 
   challengeStack = new ChallengeStack();
 
