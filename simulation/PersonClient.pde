@@ -56,6 +56,7 @@ class PersonClient extends Client {
     get.send();
     ArrayList<Task> tasks = new ArrayList<Task>();
     if (get.status == 200 && get.getContent() != null) {
+      person.world.eventStream.emit(new GetTasksSuccessEvent());
       JSONObject jsonResponse = parseJSONObject(get.getContent());
       JSONArray jsonTasks = jsonResponse.getJSONArray("tasks");
 
