@@ -19,6 +19,16 @@ manage their work.
 
 ![Simulation of some wandering lumberjacks](simulation.gif)
 
+## Example solutions
+
+This repo includes basic example solutions which are used to test the
+simulation's challenges.
+
+```
+$ bundle install
+$ bundle exec ruby example_solutions/challenge_1.rb
+```
+
 # With thanks
 
 Many thanks to:
