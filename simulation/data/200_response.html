@@ -1,8 +1,63 @@
 <html>
   <head>
     <title>Forestry</title>
+<style>
+body {
+  background-color: whitesmoke;
+  font-family: system-ui;
+  line-height: 1.5;
+  margin: 2em auto;
+  width: 33em;
+}
+
+pre, code {
+  background: lightgray;
+}
+
+p code {
+  border-radius: .2em;
+  padding: .2em;
+}
+
+pre {
+  padding: 1em;
+}
+</style>
   </head>
   <body>
     <h1>Forestry</h1>
+
+    <h2>200 Response</h2>
+
+    <p>Welcome to Forestry! You are <strong>Head of Operations</strong> for a small patch of forest land. Your employees (lumberjacks) are eagerly awaiting instructions.</p>
+
+    <p>However, they can only talk to you by making HTTP requests. So your first job is to write a server.</p>
+
+    <h3>&#8220;I&#8217;m ready for work!&#8221;</h3>
+
+    <p>When a new lumberjack is ready to start work, they make an announcement. It looks like this:</p>
+
+<pre><code>POST /people
+Host: localhost
+Port: 4567
+Content-Type: application/x-www-form-urlencoded
+
+id=24f2caed-0fe4-48e6-adfc-a2ea2cd730cd&amp;x=8&amp;y=11
+</code></pre>
+
+    <p>They provide you with their employee id and their current location as a form encoded string.</p>
+
+    <p>Taking <a href="http://sinatrarb.com/intro.html">Sinatra</a> as an example, those details are already made available as your <code>params</code> object:</p>
+
+<pre><code>params = {
+  &quot;id&quot; =&gt; &quot;24f2caed-0fe4-48e6-adfc-a2ea2cd730cd&quot;,
+  &quot;x&quot; =&gt; &quot;8&quot;,
+  &quot;y&quot; =&gt; &quot;11&quot;
+}
+</code></pre>
+
+    <h3>How to succeed</h3>
+
+    <p>To complete this first challenge, you just need to give a <code>200</code> response for this request.</p>
   </body>
 </html>
