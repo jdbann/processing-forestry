@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title>Forestry</title>
+<style>
+body {
+  background-color: whitesmoke;
+  font-family: system-ui;
+  line-height: 1.5;
+  margin: 2em auto;
+  width: 33em;
+}
+
+pre, code {
+  background: lightgray;
+}
+
+p code {
+  border-radius: .2em;
+  padding: .2em;
+}
+
+pre {
+  padding: 1em;
+}
+</style>
+  </head>
+  <body>
+    <h1>Forestry</h1>
+
+    <h2>Go For A Walk</h2>
+
+    <p>Let&#8217;s put this lumberjack through their paces then. Nothing too strenuous though, we&#8217;re just going to ask them to walk to a specific place.</p>
+
+    <h3>Walk this way</h3>
+
+    <p>You should already be able to handle a person asking for tasks. Now lets look at how we specify a task which can be completed:</p>
+
+<pre><code>{
+  &quot;tasks&quot;: [
+      {
+        &quot;type&quot;: &quot;walk&quot;,
+        &quot;id&quot;: &quot;anything&quot;,
+        &quot;x&quot;: 10,
+        &quot;y&quot;: 10
+      }
+  ]
+}
+</code></pre>
+
+    <p>So, a task is an object inside the <code>tasks</code> array. All tasks have a <code>type</code> (in this instance, <code>&quot;walk&quot;</code>), an <code>id</code> (which doesn&#8217;t matter right now) and other details related to the particular task.</p>
+
+    <p>For a <code>walk</code> task, we specify a set of coordinates to indicate where we would like the person to walk to.</p>
+
+    <h3>How to succeed</h3>
+
+    <p>Get your lumberjack to walk to any location. When they successfully arrive, you will have succeeded!</p>
+  </body>
+</html>

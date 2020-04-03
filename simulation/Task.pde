@@ -75,6 +75,16 @@ class WalkTask extends Task {
       return false;
     }
   }
+
+  boolean isComplete() {
+    boolean hasCompleted = super.isComplete();
+
+    if (hasCompleted) {
+      person.world.eventStream.emit(new WalkTaskCompleteEvent());
+    }
+
+    return hasCompleted;
+  }
 }
 
 class WanderTask extends Task {

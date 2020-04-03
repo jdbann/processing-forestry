@@ -9,3 +9,8 @@ class GetTasksSuccessEvent extends Event {
   GetTasksSuccessEvent() {
   }
 }
+
+class WalkTaskCompleteEvent extends Event {
+  WalkTaskCompleteEvent() {
+  }
+}

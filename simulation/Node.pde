@@ -17,7 +17,7 @@ class Node {
     setOccupant(tempOccupant);
 
     noiseSeed(graph.world.seed);
-    h = noise(x / graph.world.scale, y / graph.world.scale);
+    h = noise(x / graph.world.scale, y / graph.world.scale) / 8;
   }
 
   void setOccupant(WorldEntity newOccupant) {

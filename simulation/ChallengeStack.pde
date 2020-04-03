@@ -6,6 +6,7 @@ class ChallengeStack {
     challengeStack = new ArrayList<Challenge>();
     challengeStack.add(new Challenge_200Response());
     challengeStack.add(new Challenge_GetTasks());
+    challengeStack.add(new Challenge_GoForAWalk());
     challengeStack.add(new Challenge_Sandbox());
     currentChallengeIndex = 0;
   }
