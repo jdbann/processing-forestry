@@ -2,7 +2,7 @@ abstract class Challenge {
   World world;
   EventStream stream;
   boolean complete;
-  String title, description;
+  String title;
   int completedAt;
 
   PGraphics overlay;
@@ -42,7 +42,6 @@ abstract class Challenge {
       overlay.text("Complete!", 32, 96, 400, height);
     } else {
       overlay.textSize(16);
-      overlay.text(description, 32, 96, 400, height);
     }
     overlay.endDraw();
     return overlay;
