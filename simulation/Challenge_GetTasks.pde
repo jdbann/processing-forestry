@@ -10,4 +10,7 @@ class Challenge_GetTasks extends Challenge {
       markComplete();
     }
   }
+
+  void openHelp() {
+  }
 }

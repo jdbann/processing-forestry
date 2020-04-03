@@ -30,6 +30,8 @@ abstract class Challenge {
 
   abstract void listen(Event e);
 
+  abstract void openHelp();
+
   PGraphics drawOverlay() {
     overlay = createGraphics(width, height, P3D);
     overlay.beginDraw();

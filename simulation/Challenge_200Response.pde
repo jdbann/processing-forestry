@@ -10,4 +10,8 @@ class Challenge_200Response extends Challenge {
       markComplete();
     }
   }
+
+  void openHelp() {
+    launch(dataPath("200_response.html"));
+  }
 }

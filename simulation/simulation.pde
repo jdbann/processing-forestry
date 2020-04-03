@@ -29,6 +29,9 @@ void draw() {
 
   image(currentChallenge.world.pg, 0, 0);
   image(currentChallenge.overlay(), 0, 0);
+
+  textSize(16);
+  text("Press [h] for help on current challenge", 40, 760);
 }
 
 void mouseDragged() {
@@ -37,7 +40,14 @@ void mouseDragged() {
 }
 
 void keyPressed() {
-  debugGraph = !debugGraph;
+  switch(key) {
+    case 'g':
+      debugGraph = !debugGraph;
+      break;
+    case 'h':
+      challengeStack.currentChallenge().openHelp();
+      break;
+  }
 }
 
 void mouseWheel(MouseEvent event) {
