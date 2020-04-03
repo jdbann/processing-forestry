@@ -11,5 +11,6 @@ class Challenge_GetTasks extends Challenge {
   }
 
   void openHelp() {
+    launch(dataPath("get_tasks.html"));
   }
 }

@@ -53,16 +53,18 @@ class PersonClient extends Client {
 
   ArrayList<Task> getTasks() {
     GetRequest get = get("/tasks");
+    get.addHeader("Accept", "application/json");
     get.send();
     ArrayList<Task> tasks = new ArrayList<Task>();
     if (get.status == 200 && get.getContent() != null) {
-      person.world.eventStream.emit(new GetTasksSuccessEvent());
       JSONObject jsonResponse = parseJSONObject(get.getContent());
       JSONArray jsonTasks = jsonResponse.getJSONArray("tasks");
 
       if (jsonTasks == null) {
         return tasks;
       }
+
+      person.world.eventStream.emit(new GetTasksSuccessEvent());
 
       for (int i = 0; i < jsonTasks.size(); i++) {
         JSONObject jsonTask = jsonTasks.getJSONObject(i);

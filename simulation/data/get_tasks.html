@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>Forestry</title>
+<style>
+body {
+  background-color: whitesmoke;
+  font-family: system-ui;
+  line-height: 1.5;
+  margin: 2em auto;
+  width: 33em;
+}
+
+pre, code {
+  background: lightgray;
+}
+
+p code {
+  border-radius: .2em;
+  padding: .2em;
+}
+
+pre {
+  padding: 1em;
+}
+</style>
+  </head>
+  <body>
+    <h1>Forestry</h1>
+
+    <h2>Get Tasks</h2>
+
+    <p>Now there&#8217;s not much point having these lumberjacks standing around. They get demotivated and start wandering around. In fact, they&#8217;re so desperate to find something to do that they will constantly ask you for tasks.</p>
+
+<pre><code>GET /people/24f2caed-0fe4-48e6-adfc-a2ea2cd730cd/tasks
+Host: localhost
+Port: 4567
+Accept: application/json
+</code></pre>
+
+    <p>You&#8217;ll notice that they each ask for their own tasks by adding their employee id to the path: <code>/people/:person_id/tasks</code>.</p>
+
+    <h3>Speaking their language</h3>
+
+    <p>You&#8217;ll notice that in this request, they&#8217;re specifically saying that they only accept <code>application/json</code>. So they&#8217;re looking for a valid JSON object in the body of your response.</p>
+
+    <p>More specifically, they&#8217;re expecting this returned JSON object to include a <code>tasks</code> key with an array:</p>
+
+<pre><code>{
+  &quot;tasks&quot;: []
+}
+</code></pre>
+
+    <h3>How to succeed</h3>
+
+    <p>For now, we just need the lumberjacks to know that they are getting tasks correctly, but there isn&#8217;t anything for them to do.</p>
+
+    <p>So, return a valid response when the lumberjack asks for new tasks.</p>
+  </body>
+</html>
